@@ -1,0 +1,708 @@
+/* ------------------------------------------------------------------
+   Tokens
+   Type system: serif carries Swedish, sans carries English.
+   ------------------------------------------------------------------ */
+
+:root {
+  --bg: #f0eee6;
+  --surface: #faf9f5;
+  --surface-2: #f4f2ea;
+  --ink: #1a1915;
+  --ink-2: #57544c;
+  --ink-3: #8c887c;
+  --line: #dfdbcf;
+  --line-strong: #cdc8b8;
+  --accent: #d97757;
+  --accent-ink: #b1543a;
+  --accent-soft: #f7e7df;
+
+  --serif: "Newsreader", Georgia, "Times New Roman", serif;
+  --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  --measure: 46rem;
+  --radius: 12px;
+  --radius-sm: 8px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #262624;
+    --surface: #2e2e2b;
+    --surface-2: #323230;
+    --ink: #f3f1e9;
+    --ink-2: #b3afa4;
+    --ink-3: #8a867b;
+    --line: #3e3e39;
+    --line-strong: #4c4c46;
+    --accent: #e08a6b;
+    --accent-ink: #eda88c;
+    --accent-soft: #3a2d27;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--accent-ink);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+.wrap {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 0 1.25rem 5rem;
+}
+
+/* ------------------------------------------------------------------
+   Masthead
+   ------------------------------------------------------------------ */
+
+.masthead {
+  padding: 4.5rem 0 2.5rem;
+}
+
+.eyebrow {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin: 0 0 1rem;
+}
+
+.masthead h1 {
+  font-family: var(--serif);
+  font-size: clamp(2.2rem, 7vw, 3.1rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.6rem;
+}
+
+.masthead h1 em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.masthead p {
+  max-width: 34rem;
+  margin: 0;
+  color: var(--ink-2);
+}
+
+/* ------------------------------------------------------------------
+   Progress
+   ------------------------------------------------------------------ */
+
+.progress {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 1.1rem 0 2rem;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 2rem;
+}
+
+.progress-track {
+  flex: 1;
+  height: 3px;
+  background: var(--line);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0;
+  background: var(--accent);
+  border-radius: 99px;
+  transition: width 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.progress-label {
+  font-size: 0.8rem;
+  color: var(--ink-2);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.progress button {
+  font: inherit;
+  font-size: 0.8rem;
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--ink-3);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.progress button:hover {
+  color: var(--accent-ink);
+}
+
+/* ------------------------------------------------------------------
+   Lesson cards
+   ------------------------------------------------------------------ */
+
+.card-list {
+  display: grid;
+  gap: 0.85rem;
+  margin: 0 0 2.5rem;
+  padding: 0;
+  list-style: none;
+}
+
+.card {
+  display: grid;
+  grid-template-columns: 2.4rem 1fr auto;
+  gap: 0 1rem;
+  align-items: start;
+  width: 100%;
+  text-align: left;
+  padding: 1.4rem 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 0.2s, transform 0.2s, background 0.2s;
+}
+
+.card:hover {
+  border-color: var(--line-strong);
+  transform: translateY(-2px);
+}
+
+.card-num {
+  font-family: var(--serif);
+  font-size: 1.6rem;
+  line-height: 1;
+  color: var(--ink-3);
+  padding-top: 0.15rem;
+}
+
+.card.done .card-num {
+  color: var(--accent);
+}
+
+.card-theme {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-ink);
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+.card h2 {
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  font-weight: 400;
+  line-height: 1.25;
+  margin: 0 0 0.4rem;
+  letter-spacing: -0.01em;
+}
+
+.card-focus {
+  font-size: 0.85rem;
+  color: var(--ink-2);
+  margin: 0;
+}
+
+.card-req {
+  display: inline-block;
+  margin-top: 0.7rem;
+  font-size: 0.75rem;
+  color: var(--ink-3);
+  border-left: 2px solid var(--line-strong);
+  padding-left: 0.55rem;
+}
+
+.check {
+  grid-column: 3;
+  grid-row: 1;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid var(--line-strong);
+  display: grid;
+  place-items: center;
+  margin-top: 0.35rem;
+  flex: none;
+}
+
+.check svg {
+  width: 12px;
+  height: 12px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.card.done .check {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.card.done .check svg {
+  opacity: 1;
+  stroke: var(--surface);
+}
+
+@media (prefers-color-scheme: dark) {
+  .card.done .check svg {
+    stroke: #262624;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Order note + footer note
+   ------------------------------------------------------------------ */
+
+.aside {
+  background: var(--accent-soft);
+  border-radius: var(--radius);
+  padding: 1.15rem 1.35rem;
+  font-size: 0.9rem;
+  color: var(--ink-2);
+  margin: 0 0 2.5rem;
+}
+
+.aside strong {
+  color: var(--ink);
+}
+
+.next-up {
+  border-top: 1px solid var(--line);
+  padding-top: 1.75rem;
+  color: var(--ink-2);
+  font-size: 0.9rem;
+}
+
+.next-up h3 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 1.05rem;
+  color: var(--ink);
+  margin: 0 0 0.4rem;
+}
+
+/* ------------------------------------------------------------------
+   Lesson view
+   ------------------------------------------------------------------ */
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 2.5rem 0 2rem;
+  font-size: 0.85rem;
+  color: var(--ink-2);
+  text-decoration: none;
+}
+
+.back:hover {
+  color: var(--accent-ink);
+}
+
+.lesson-head {
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+.lesson-head h1 {
+  font-family: var(--serif);
+  font-size: clamp(1.9rem, 5.5vw, 2.5rem);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.6rem;
+}
+
+.lesson-head p {
+  margin: 0;
+  color: var(--ink-2);
+  max-width: 34rem;
+}
+
+.block-heading {
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  margin: 3rem 0 1rem;
+}
+
+.prose {
+  margin: 0 0 1.2rem;
+  max-width: 36rem;
+}
+
+.note {
+  border-left: 2px solid var(--accent);
+  padding: 0.15rem 0 0.15rem 1.1rem;
+  margin: 1.75rem 0;
+  color: var(--ink-2);
+  max-width: 36rem;
+}
+
+.note strong {
+  color: var(--ink);
+}
+
+/* Rules list — numbering would imply sequence, so these are plain markers */
+.rules {
+  margin: 0 0 1.75rem;
+  padding: 0;
+  list-style: none;
+  max-width: 38rem;
+}
+
+.rules-title {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin: 1.75rem 0 0.7rem;
+}
+
+.rules li {
+  position: relative;
+  padding-left: 1.1rem;
+  margin-bottom: 0.55rem;
+}
+
+.rules li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+/* Tables */
+.table-wrap {
+  margin: 0 0 1.9rem;
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--serif);
+  font-size: 1rem;
+}
+
+th {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  text-align: left;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+
+td {
+  padding: 0.7rem 1rem;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+td b {
+  font-weight: 600;
+  color: var(--accent-ink);
+}
+
+.gloss {
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  color: var(--ink-3);
+  display: block;
+  line-height: 1.4;
+}
+
+.table-caption {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin: 0 0 0.7rem;
+}
+
+/* Example pairs — the signature: Swedish set large in serif, English tucked
+   underneath in small sans. */
+.examples {
+  margin: 0 0 1.9rem;
+  padding: 0;
+  list-style: none;
+}
+
+.examples li {
+  padding: 0.85rem 0 0.85rem 1.1rem;
+  border-left: 1px solid var(--line);
+}
+
+.examples li:hover {
+  border-left-color: var(--accent);
+}
+
+.sv {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  line-height: 1.45;
+  display: block;
+}
+
+.en {
+  font-size: 0.85rem;
+  color: var(--ink-3);
+  display: block;
+  margin-top: 0.15rem;
+}
+
+/* ------------------------------------------------------------------
+   Exercises
+   ------------------------------------------------------------------ */
+
+.exercise {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin: 2rem 0;
+}
+
+.exercise-label {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-ink);
+  margin: 0 0 0.5rem;
+}
+
+.exercise-instruction {
+  margin: 0 0 1.25rem;
+  font-size: 0.92rem;
+  color: var(--ink-2);
+}
+
+.q {
+  margin-bottom: 1.1rem;
+}
+
+.q-prompt {
+  font-family: var(--serif);
+  font-size: 1.02rem;
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.q-row {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.q input {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--serif);
+  font-size: 1rem;
+  padding: 0.55rem 0.75rem;
+  background: var(--bg);
+  color: var(--ink);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+}
+
+.q input::placeholder {
+  color: var(--ink-3);
+  font-family: var(--sans);
+  font-size: 0.88rem;
+}
+
+.q.right input {
+  border-color: var(--accent);
+}
+
+.q.wrong input {
+  border-color: var(--line-strong);
+}
+
+.verdict {
+  font-size: 0.95rem;
+  width: 1.1rem;
+  flex: none;
+  color: var(--accent);
+}
+
+.solution {
+  font-family: var(--serif);
+  font-size: 0.95rem;
+  color: var(--ink-2);
+  margin-top: 0.4rem;
+  padding-left: 0.1rem;
+}
+
+.solution span {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-right: 0.5rem;
+}
+
+.exercise-actions {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-top: 1.35rem;
+}
+
+/* ------------------------------------------------------------------
+   Buttons
+   ------------------------------------------------------------------ */
+
+.btn {
+  font: inherit;
+  font-size: 0.88rem;
+  padding: 0.55rem 1.1rem;
+  border-radius: 99px;
+  border: 1px solid var(--line-strong);
+  background: var(--bg);
+  color: var(--ink);
+  cursor: pointer;
+  transition: background 0.18s, border-color 0.18s, color 0.18s;
+}
+
+.btn:hover {
+  border-color: var(--ink-3);
+}
+
+.btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: var(--accent-ink);
+  border-color: var(--accent-ink);
+}
+
+.btn-primary.is-done {
+  background: transparent;
+  color: var(--accent-ink);
+}
+
+/* ------------------------------------------------------------------
+   Lesson footer
+   ------------------------------------------------------------------ */
+
+.lesson-foot {
+  margin-top: 3.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.lesson-foot .next {
+  font-size: 0.88rem;
+  text-align: right;
+}
+
+.lesson-foot .next span {
+  display: block;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.site-foot {
+  margin-top: 4rem;
+  font-size: 0.78rem;
+  color: var(--ink-3);
+}
+
+@media (max-width: 34rem) {
+  .masthead {
+    padding-top: 3rem;
+  }
+
+  .card {
+    grid-template-columns: 1.9rem 1fr auto;
+    padding: 1.2rem 1.1rem;
+  }
+
+  .exercise {
+    padding: 1.15rem;
+  }
+
+  .q-row {
+    flex-wrap: wrap;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+
+  .card:hover {
+    transform: none;
+  }
+}
