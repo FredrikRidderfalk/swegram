@@ -6,10 +6,15 @@
     <title>Swedish grammar for beginners</title>
     <meta
       name="description"
-      content="Three beginner Swedish grammar lessons — nouns, verbs and adjectives — taught through Stardew Valley, Pokémon and bunnies."
+      content="Learn Swedish grammar through vocabulary you actually care about — pick a theme and practise nouns, verbs, adjectives and more."
     />
     <meta name="theme-color" content="#f0eee6" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#262624" media="(prefers-color-scheme: dark)" />
+
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23d97757'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='21' fill='%23fff' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E"
+    />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -103,7 +108,7 @@ a {
    ------------------------------------------------------------------ */
 
 .masthead {
-  padding: 4.5rem 0 2.5rem;
+  padding: 4.5rem 0 2rem;
 }
 
 .eyebrow {
@@ -136,6 +141,113 @@ a {
 }
 
 /* ------------------------------------------------------------------
+   What's-new callout
+   ------------------------------------------------------------------ */
+
+.callout {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--accent-soft);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0 0;
+}
+
+.callout-body {
+  flex: 1;
+}
+
+.callout-eyebrow {
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-ink);
+  margin: 0 0 0.25rem;
+}
+
+.callout-text {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--ink-2);
+}
+
+.callout-dismiss {
+  font: inherit;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  padding: 0.45rem 0.9rem;
+  border-radius: 99px;
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+  transition: border-color 0.18s, color 0.18s;
+}
+
+.callout-dismiss:hover {
+  border-color: var(--ink-3);
+}
+
+/* ------------------------------------------------------------------
+   Section tabs
+   ------------------------------------------------------------------ */
+
+.tabs {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin: 2rem 0 1.25rem;
+}
+
+.tab {
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 0.4rem 0.9rem;
+  border-radius: 99px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink-2);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  transition: border-color 0.18s, color 0.18s, background 0.18s;
+}
+
+.tab:hover {
+  border-color: var(--line-strong);
+  color: var(--ink);
+}
+
+.tab.is-active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.tab.is-disabled {
+  cursor: not-allowed;
+  opacity: 0.75;
+}
+
+.tab.is-disabled:hover {
+  border-color: var(--line);
+  color: var(--ink-2);
+}
+
+.tab-soon {
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+/* ------------------------------------------------------------------
    Progress
    ------------------------------------------------------------------ */
 
@@ -143,7 +255,7 @@ a {
   display: flex;
   align-items: center;
   gap: 0.9rem;
-  padding: 1.1rem 0 2rem;
+  padding: 0 0 2rem;
   border-bottom: 1px solid var(--line);
   margin-bottom: 2rem;
 }
@@ -215,9 +327,14 @@ a {
   transition: border-color 0.2s, transform 0.2s, background 0.2s;
 }
 
-.card:hover {
+a.card:hover {
   border-color: var(--line-strong);
   transform: translateY(-2px);
+}
+
+.card.is-locked {
+  opacity: 0.72;
+  cursor: default;
 }
 
 .card-num {
@@ -232,14 +349,35 @@ a {
   color: var(--accent);
 }
 
+.card-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-bottom: 0.3rem;
+}
+
 .card-theme {
   font-size: 0.7rem;
   font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--accent-ink);
-  display: block;
-  margin-bottom: 0.3rem;
+}
+
+.card.is-locked .card-theme {
+  color: var(--ink-3);
+}
+
+.badge-new {
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--accent);
+  padding: 0.12rem 0.42rem;
+  border-radius: 99px;
+  line-height: 1.5;
 }
 
 .card h2 {
@@ -257,13 +395,19 @@ a {
   margin: 0;
 }
 
-.card-req {
-  display: inline-block;
-  margin-top: 0.7rem;
+.card-lock {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.75rem;
   font-size: 0.75rem;
   color: var(--ink-3);
-  border-left: 2px solid var(--line-strong);
-  padding-left: 0.55rem;
+}
+
+.card-lock svg {
+  width: 12px;
+  height: 12px;
+  flex: none;
 }
 
 .check {
@@ -296,42 +440,22 @@ a {
   stroke: var(--surface);
 }
 
+.check.is-lock {
+  border-color: var(--line-strong);
+  background: transparent;
+}
+
+.check.is-lock svg {
+  opacity: 1;
+  width: 11px;
+  height: 11px;
+  stroke: var(--ink-3);
+}
+
 @media (prefers-color-scheme: dark) {
   .card.done .check svg {
     stroke: #262624;
   }
-}
-
-/* ------------------------------------------------------------------
-   Order note + footer note
-   ------------------------------------------------------------------ */
-
-.aside {
-  background: var(--accent-soft);
-  border-radius: var(--radius);
-  padding: 1.15rem 1.35rem;
-  font-size: 0.9rem;
-  color: var(--ink-2);
-  margin: 0 0 2.5rem;
-}
-
-.aside strong {
-  color: var(--ink);
-}
-
-.next-up {
-  border-top: 1px solid var(--line);
-  padding-top: 1.75rem;
-  color: var(--ink-2);
-  font-size: 0.9rem;
-}
-
-.next-up h3 {
-  font-family: var(--serif);
-  font-weight: 400;
-  font-size: 1.05rem;
-  color: var(--ink);
-  margin: 0 0 0.4rem;
 }
 
 /* ------------------------------------------------------------------
@@ -355,7 +479,7 @@ a {
 .lesson-head {
   border-bottom: 1px solid var(--line);
   padding-bottom: 2rem;
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
 }
 
 .lesson-head h1 {
@@ -371,6 +495,84 @@ a {
   margin: 0;
   color: var(--ink-2);
   max-width: 34rem;
+}
+
+/* ------------------------------------------------------------------
+   Theme switcher
+   ------------------------------------------------------------------ */
+
+.theme-switch {
+  margin: 0 0 2.5rem;
+}
+
+.theme-switch-label {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  display: block;
+  margin-bottom: 0.6rem;
+}
+
+.theme-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.theme-pill {
+  font: inherit;
+  font-size: 0.82rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: 99px;
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
+  color: var(--ink-2);
+  cursor: pointer;
+  transition: border-color 0.18s, color 0.18s, background 0.18s;
+}
+
+.theme-pill:hover {
+  border-color: var(--ink-3);
+  color: var(--ink);
+}
+
+.theme-pill.is-active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.theme-pill.is-complete:not(.is-active) {
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+.theme-pill-check {
+  width: 13px;
+  height: 13px;
+  display: none;
+}
+
+.theme-pill-check svg {
+  width: 13px;
+  height: 13px;
+}
+
+.theme-pill.is-complete .theme-pill-check {
+  display: inline-flex;
+}
+
+.theme-pill.is-active .theme-pill-check svg {
+  stroke: #fff;
+}
+
+.theme-pill.is-complete:not(.is-active) .theme-pill-check svg {
+  stroke: var(--accent);
 }
 
 .block-heading {
@@ -722,7 +924,7 @@ td b {
     animation-duration: 0.01ms !important;
   }
 
-  .card:hover {
+  a.card:hover {
     transform: none;
   }
 }
@@ -752,44 +954,84 @@ td b {
 (function () {
   "use strict";
   try {
-// Lesson content. Each lesson is a list of blocks; app.js knows how to render
-// each block type. Add a lesson by appending an object with a unique `id`.
+
+/* ==================================================================
+   Config
+   ================================================================== */
+
+// The five themes every lesson is available in. Completing a lesson in any
+// one theme completes the lesson; the overview tracks how many themes deep
+// you've gone.
+const THEMES = ["Stardew Valley", "Animal Crossing", "Bunnies", "Japan", "Traveling"];
+
+// Bump UPDATE_ID whenever there's something new to announce. The "what's new"
+// callout reappears until the user dismisses this exact id.
+const UPDATE_ID = "2026-07-animal-crossing";
+const UPDATE_TEXT =
+  "The latest update adds a new lesson theme — <strong>Animal Crossing</strong>. Open any lesson and switch themes to try it.";
+
+// Sections group lessons by level. Only "beginner" has content for now; the
+// rest are visible but disabled so the shape of what's coming is clear.
+const sections = [
+  { id: "beginner", label: "Beginner", enabled: true },
+  { id: "intermediate", label: "Intermediate", enabled: false },
+  { id: "advanced", label: "Advanced", enabled: false },
+];
+
+/* ==================================================================
+   Block builders
+   Each lesson keeps its grammar explanation once and swaps only the
+   themed vocabulary, sentences and exercises per theme.
+   ================================================================== */
+
+function nounTable(caption, rows) {
+  return {
+    type: "table",
+    caption,
+    headers: ["Indefinite", "Definite", "Plural", "Definite plural"],
+    rows,
+  };
+}
+
+function examplesBlock(items) {
+  return { type: "examples", items };
+}
+
+function exercise(instruction, items) {
+  return { type: "exercise", instruction, items };
+}
+
+function verbTable(t) {
+  const rows = [];
+  t.arVerbs.forEach((v, i) => rows.push([i === 0 ? "<b>-ar verbs</b>" : "", v[0], v[1], v[2]]));
+  t.erVerbs.forEach((v, i) => rows.push([i === 0 ? "<b>-er verbs</b>" : "", v[0], v[1], v[2]]));
+  t.shortVerbs.forEach((v, i) => rows.push([i === 0 ? "<b>short verbs</b>" : "", v[0], v[1], v[2]]));
+  rows.push(["<b>irregular</b>", "vara", "är", "be"]);
+  rows.push(["", "ha", "har", "have"]);
+  return { type: "table", headers: ["Group", "Infinitive", "Present", "Meaning"], rows };
+}
+
+/* ==================================================================
+   Lessons
+   ================================================================== */
 
 const lessons = [
+  /* -------------------------------- Lesson 1 -------------------------------- */
   {
     id: "nouns",
     number: 1,
-    theme: "Stardew Valley",
+    section: "beginner",
+    short: "Nouns",
     title: "Nouns, gender, and “the”",
     focus: "en/ett · definite forms · plurals",
     summary:
       "Every Swedish noun is an en-word or an ett-word, and “the” is glued onto the end of the word instead of standing in front of it.",
-    blocks: [
-      {
-        type: "prose",
-        text: "Swedish has two noun genders: <em>en</em>-words (about 75% of nouns) and <em>ett</em>-words (about 25%). There is no reliable rule for which is which, so you memorise the article together with the word. Learn “en gård”, never just “gård”.",
-      },
-      {
-        type: "note",
-        text: "Second big idea: <strong>“the” is a suffix, not a separate word.</strong> You attach it to the end of the noun.",
-      },
-      {
-        type: "table",
-        caption: "The four forms every noun has",
-        headers: ["", "a farm / a tree", "the …", "…s", "the …s"],
-        rows: [
-          ["en-word", "en gård", "gård<b>en</b>", "gård<b>ar</b>", "gård<b>arna</b>"],
-          ["ett-word", "ett träd", "träd<b>et</b>", "träd", "träd<b>en</b>"],
-        ],
-      },
-      { type: "heading", text: "Farm vocabulary" },
-      {
-        type: "table",
-        caption: "en-words",
-        headers: ["Indefinite", "Definite", "Plural", "Definite plural"],
-        rows: [
+    requires: [],
+    themes: {
+      "Stardew Valley": {
+        enWords: [
           ["en gård <span class=gloss>farm</span>", "gården", "gårdar", "gårdarna"],
-          ["en hacka <span class=gloss>hoe</span>", "hackan", "hackor", "hackorna"],
+          ["en blomma <span class=gloss>flower</span>", "blomman", "blommor", "blommorna"],
           ["en yxa <span class=gloss>axe</span>", "yxan", "yxor", "yxorna"],
           ["en höna <span class=gloss>hen</span>", "hönan", "hönor", "hönorna"],
           ["en ko <span class=gloss>cow</span>", "kon", "kor", "korna"],
@@ -799,276 +1041,667 @@ const lessons = [
           ["en butik <span class=gloss>shop</span>", "butiken", "butiker", "butikerna"],
           ["en vän <span class=gloss>friend</span>", "vännen", "vänner", "vännerna"],
         ],
-      },
-      {
-        type: "table",
-        caption: "ett-words",
-        headers: ["Indefinite", "Definite", "Plural", "Definite plural"],
-        rows: [
+        ettWords: [
           ["ett frö <span class=gloss>seed</span>", "fröet", "frön", "fröna"],
           ["ett äpple <span class=gloss>apple</span>", "äpplet", "äpplen", "äpplena"],
           ["ett träd <span class=gloss>tree</span>", "trädet", "träd", "träden"],
           ["ett svärd <span class=gloss>sword</span>", "svärdet", "svärd", "svärden"],
           ["ett hus <span class=gloss>house</span>", "huset", "hus", "husen"],
         ],
-      },
-      { type: "heading", text: "The patterns behind the tables" },
-      {
-        type: "rules",
-        title: "Definite (“the”)",
-        items: [
-          "en-word ending in a consonant → add <b>-en</b> · fisk → fisken",
-          "en-word ending in a vowel → add <b>-n</b> · hacka → hackan",
-          "ett-word ending in a consonant → add <b>-et</b> · svärd → svärdet",
-          "ett-word ending in a vowel → add <b>-t</b> · frö → fröet",
-        ],
-      },
-      {
-        type: "rules",
-        title: "Plural",
-        items: [
-          "en-words ending in <b>-a</b> swap it for <b>-or</b> · hacka → hackor",
-          "other en-words take <b>-ar</b> or <b>-er</b> · fisk → fiskar, butik → butiker",
-          "ett-words ending in a vowel take <b>-n</b> · äpple → äpplen",
-          "ett-words ending in a consonant don’t change · ett hus → två hus",
-        ],
-      },
-      {
-        type: "prose",
-        text: "Definite plural is then just <b>-na</b>, or <b>-a</b> if the plural already ends in <em>-r</em>: gårdar → gårdarna, äpplen → äpplena.",
-      },
-      { type: "heading", text: "Sentences" },
-      {
-        type: "examples",
-        items: [
-          ["Jag har en hacka.", "I have a hoe."],
-          ["Hackan är gammal.", "The hoe is old."],
+        examples: [
+          ["Jag har en blomma.", "I have a flower."],
+          ["Blomman är röd.", "The flower is red."],
           ["Jag planterar frön.", "I plant seeds."],
           ["Fröna är i lådan.", "The seeds are in the box."],
           ["Butiken är stängd på tisdagar.", "The shop is closed on Tuesdays."],
           ["Hönorna sover i huset.", "The hens are sleeping in the house."],
         ],
-      },
-      {
-        type: "exercise",
-        instruction:
-          "Give the definite singular, plural, and definite plural — separated by spaces or commas.",
-        items: [
+        drill: [
           { q: "en fisk", answer: "fisken, fiskar, fiskarna" },
           { q: "ett äpple", answer: "äpplet, äpplen, äpplena" },
           { q: "en gruva", answer: "gruvan, gruvor, gruvorna" },
           { q: "ett svärd", answer: "svärdet, svärd, svärden" },
           { q: "en vän", answer: "vännen, vänner, vännerna" },
         ],
-      },
-      {
-        type: "exercise",
-        instruction: "Translate into Swedish.",
-        items: [
+        translate: [
           { q: "The cow is big. (big = stor)", answer: "Kon är stor." },
           { q: "I have two axes.", answer: "Jag har två yxor." },
-          {
-            q: "The trees are in the forest. (forest = skogen)",
-            answer: "Träden är i skogen.",
-          },
+          { q: "The trees are in the forest. (forest = skogen)", answer: "Träden är i skogen." },
         ],
       },
-    ],
+      "Animal Crossing": {
+        enWords: [
+          ["en ö <span class=gloss>island</span>", "ön", "öar", "öarna"],
+          ["en granne <span class=gloss>neighbour</span>", "grannen", "grannar", "grannarna"],
+          ["en fisk <span class=gloss>fish</span>", "fisken", "fiskar", "fiskarna"],
+          ["en insekt <span class=gloss>bug</span>", "insekten", "insekter", "insekterna"],
+          ["en frukt <span class=gloss>fruit</span>", "frukten", "frukter", "frukterna"],
+          ["en spade <span class=gloss>shovel</span>", "spaden", "spadar", "spadarna"],
+          ["en brygga <span class=gloss>pier</span>", "bryggan", "bryggor", "bryggorna"],
+          ["en affär <span class=gloss>shop</span>", "affären", "affärer", "affärerna"],
+        ],
+        ettWords: [
+          ["ett äpple <span class=gloss>apple</span>", "äpplet", "äpplen", "äpplena"],
+          ["ett tält <span class=gloss>tent</span>", "tältet", "tält", "tälten"],
+          ["ett museum <span class=gloss>museum</span>", "museet", "museer", "museerna"],
+          ["ett träd <span class=gloss>tree</span>", "trädet", "träd", "träden"],
+          ["ett hus <span class=gloss>house</span>", "huset", "hus", "husen"],
+        ],
+        examples: [
+          ["Jag bor på en ö.", "I live on an island."],
+          ["Grannarna är snälla.", "The neighbours are kind."],
+          ["Jag fångar en insekt.", "I catch a bug."],
+          ["Frukterna växer på träden.", "The fruit grows on the trees."],
+          ["Museet är öppet idag.", "The museum is open today."],
+          ["Jag har ett litet tält.", "I have a small tent."],
+        ],
+        drill: [
+          { q: "en granne", answer: "grannen, grannar, grannarna" },
+          { q: "ett äpple", answer: "äpplet, äpplen, äpplena" },
+          { q: "en frukt", answer: "frukten, frukter, frukterna" },
+          { q: "ett tält", answer: "tältet, tält, tälten" },
+          { q: "en ö", answer: "ön, öar, öarna" },
+        ],
+        translate: [
+          { q: "The island is big. (big = stor)", answer: "Ön är stor." },
+          { q: "I have two apples.", answer: "Jag har två äpplen." },
+          { q: "The neighbours live in the houses. (live = bor)", answer: "Grannarna bor i husen." },
+        ],
+      },
+      Bunnies: {
+        enWords: [
+          ["en kanin <span class=gloss>bunny</span>", "kaninen", "kaniner", "kaninerna"],
+          ["en morot <span class=gloss>carrot</span>", "moroten", "morötter", "morötterna"],
+          ["en tass <span class=gloss>paw</span>", "tassen", "tassar", "tassarna"],
+          ["en svans <span class=gloss>tail</span>", "svansen", "svansar", "svansarna"],
+          ["en päls <span class=gloss>fur</span>", "pälsen", "pälsar", "pälsarna"],
+          ["en hage <span class=gloss>meadow</span>", "hagen", "hagar", "hagarna"],
+        ],
+        ettWords: [
+          ["ett öra <span class=gloss>ear</span>", "örat", "öron", "öronen"],
+          ["ett hål <span class=gloss>hole</span>", "hålet", "hål", "hålen"],
+          ["ett bo <span class=gloss>burrow, nest</span>", "boet", "bon", "bona"],
+        ],
+        examples: [
+          ["Jag har en kanin.", "I have a bunny."],
+          ["Kaninen äter en morot.", "The bunny eats a carrot."],
+          ["Kaninerna sover i hålet.", "The bunnies sleep in the hole."],
+          ["Öronen är långa.", "The ears are long."],
+          ["Morötterna är i hagen.", "The carrots are in the meadow."],
+          ["Jag ser två kaniner.", "I see two bunnies."],
+        ],
+        drill: [
+          { q: "en kanin", answer: "kaninen, kaniner, kaninerna" },
+          { q: "ett öra", answer: "örat, öron, öronen" },
+          { q: "en morot", answer: "moroten, morötter, morötterna" },
+          { q: "ett hål", answer: "hålet, hål, hålen" },
+          { q: "en tass", answer: "tassen, tassar, tassarna" },
+        ],
+        translate: [
+          { q: "The bunny is small. (small = liten)", answer: "Kaninen är liten." },
+          { q: "I have two carrots.", answer: "Jag har två morötter." },
+          { q: "The ears are soft. (soft = mjuka)", answer: "Öronen är mjuka." },
+        ],
+      },
+      Japan: {
+        enWords: [
+          ["en stad <span class=gloss>city</span>", "staden", "städer", "städerna"],
+          ["en gata <span class=gloss>street</span>", "gatan", "gator", "gatorna"],
+          ["en station <span class=gloss>station</span>", "stationen", "stationer", "stationerna"],
+          ["en skål <span class=gloss>bowl</span>", "skålen", "skålar", "skålarna"],
+          ["en trädgård <span class=gloss>garden</span>", "trädgården", "trädgårdar", "trädgårdarna"],
+          ["en ö <span class=gloss>island</span>", "ön", "öar", "öarna"],
+        ],
+        ettWords: [
+          ["ett tempel <span class=gloss>temple</span>", "templet", "tempel", "templen"],
+          ["ett tåg <span class=gloss>train</span>", "tåget", "tåg", "tågen"],
+          ["ett berg <span class=gloss>mountain</span>", "berget", "berg", "bergen"],
+          ["ett träd <span class=gloss>tree</span>", "trädet", "träd", "träden"],
+          ["ett hus <span class=gloss>house</span>", "huset", "hus", "husen"],
+        ],
+        examples: [
+          ["Jag reser till en stad.", "I travel to a city."],
+          ["Tåget är snabbt.", "The train is fast."],
+          ["Templet är gammalt.", "The temple is old."],
+          ["Bergen är höga.", "The mountains are high."],
+          ["Jag äter ris ur en skål.", "I eat rice from a bowl."],
+          ["Trädgårdarna är vackra.", "The gardens are beautiful."],
+        ],
+        drill: [
+          { q: "en stad", answer: "staden, städer, städerna" },
+          { q: "ett tempel", answer: "templet, tempel, templen" },
+          { q: "en gata", answer: "gatan, gator, gatorna" },
+          { q: "ett tåg", answer: "tåget, tåg, tågen" },
+          { q: "en station", answer: "stationen, stationer, stationerna" },
+        ],
+        translate: [
+          { q: "The city is big. (big = stor)", answer: "Staden är stor." },
+          { q: "I have two bowls.", answer: "Jag har två skålar." },
+          { q: "The trains are fast. (fast = snabba)", answer: "Tågen är snabba." },
+        ],
+      },
+      Traveling: {
+        enWords: [
+          ["en resa <span class=gloss>trip</span>", "resan", "resor", "resorna"],
+          ["en väska <span class=gloss>suitcase</span>", "väskan", "väskor", "väskorna"],
+          ["en biljett <span class=gloss>ticket</span>", "biljetten", "biljetter", "biljetterna"],
+          ["en karta <span class=gloss>map</span>", "kartan", "kartor", "kartorna"],
+          ["en buss <span class=gloss>bus</span>", "bussen", "bussar", "bussarna"],
+          ["en strand <span class=gloss>beach</span>", "stranden", "stränder", "stränderna"],
+        ],
+        ettWords: [
+          ["ett hotell <span class=gloss>hotel</span>", "hotellet", "hotell", "hotellen"],
+          ["ett pass <span class=gloss>passport</span>", "passet", "pass", "passen"],
+          ["ett flyg <span class=gloss>flight</span>", "flyget", "flyg", "flygen"],
+          ["ett land <span class=gloss>country</span>", "landet", "länder", "länderna"],
+          ["ett tåg <span class=gloss>train</span>", "tåget", "tåg", "tågen"],
+        ],
+        examples: [
+          ["Jag packar en väska.", "I pack a suitcase."],
+          ["Biljetten är dyr.", "The ticket is expensive."],
+          ["Hotellet ligger vid stranden.", "The hotel is by the beach."],
+          ["Jag reser till många länder.", "I travel to many countries."],
+          ["Kartan är i väskan.", "The map is in the bag."],
+          ["Tågen går varje timme.", "The trains leave every hour."],
+        ],
+        drill: [
+          { q: "en resa", answer: "resan, resor, resorna" },
+          { q: "ett hotell", answer: "hotellet, hotell, hotellen" },
+          { q: "en biljett", answer: "biljetten, biljetter, biljetterna" },
+          { q: "ett land", answer: "landet, länder, länderna" },
+          { q: "en karta", answer: "kartan, kartor, kartorna" },
+        ],
+        translate: [
+          { q: "The trip is long. (long = lång)", answer: "Resan är lång." },
+          { q: "I have two tickets.", answer: "Jag har två biljetter." },
+          { q: "The suitcases are heavy. (heavy = tunga)", answer: "Väskorna är tunga." },
+        ],
+      },
+    },
+    build(t, themeName) {
+      return [
+        {
+          type: "prose",
+          text: "Swedish has two noun genders: <em>en</em>-words (about 75% of nouns) and <em>ett</em>-words (about 25%). There is no reliable rule for which is which, so you memorise the article together with the word. Learn “en gård”, never just “gård”.",
+        },
+        {
+          type: "note",
+          text: "Second big idea: <strong>“the” is a suffix, not a separate word.</strong> You attach it to the end of the noun.",
+        },
+        {
+          type: "table",
+          caption: "The four forms every noun has",
+          headers: ["", "a car / a house", "the …", "…s", "the …s"],
+          rows: [
+            ["en-word", "en bil", "bil<b>en</b>", "bil<b>ar</b>", "bil<b>arna</b>"],
+            ["ett-word", "ett hus", "hus<b>et</b>", "hus", "hus<b>en</b>"],
+          ],
+        },
+        { type: "heading", text: themeName + " vocabulary" },
+        nounTable("en-words", t.enWords),
+        nounTable("ett-words", t.ettWords),
+        { type: "heading", text: "The patterns behind the tables" },
+        {
+          type: "rules",
+          title: "Definite (“the”)",
+          items: [
+            "en-word ending in a consonant → add <b>-en</b> · bil → bilen",
+            "en-word ending in a vowel → add <b>-n</b> · flicka → flickan",
+            "ett-word ending in a consonant → add <b>-et</b> · hus → huset",
+            "ett-word ending in a vowel → add <b>-t</b> · äpple → äpplet",
+          ],
+        },
+        {
+          type: "rules",
+          title: "Plural",
+          items: [
+            "en-words ending in <b>-a</b> swap it for <b>-or</b> · flicka → flickor",
+            "other en-words take <b>-ar</b> or <b>-er</b> · bil → bilar, film → filmer",
+            "ett-words ending in a vowel take <b>-n</b> · äpple → äpplen",
+            "ett-words ending in a consonant don’t change · ett hus → två hus",
+          ],
+        },
+        {
+          type: "prose",
+          text: "Definite plural is then just <b>-na</b>, or <b>-a</b> if the plural already ends in <em>-r</em>: bilar → bilarna, äpplen → äpplena.",
+        },
+        { type: "heading", text: "Sentences" },
+        examplesBlock(t.examples),
+        exercise(
+          "Give the definite singular, plural, and definite plural — separated by spaces or commas.",
+          t.drill
+        ),
+        exercise("Translate into Swedish.", t.translate),
+      ];
+    },
   },
 
+  /* -------------------------------- Lesson 2 -------------------------------- */
   {
     id: "verbs",
     number: 2,
-    theme: "Pokémon",
+    section: "beginner",
+    short: "Verbs",
     title: "Verbs and word order",
     focus: "present tense · imperatives · the V2 rule",
     summary:
       "Swedish verbs never change by person, which makes them easy. Word order is the part that actually needs practice.",
-    blocks: [
-      { type: "heading", text: "The good news" },
-      {
-        type: "prose",
-        text: "Swedish verbs <strong>do not change by person</strong>. One form covers everybody:",
-      },
-      {
-        type: "examples",
-        items: [
-          ["jag fångar · du fångar · han/hon fångar", "I catch · you catch · he/she catches"],
-          ["vi fångar · ni fångar · de fångar", "we catch · you catch · they catch"],
+    requires: [],
+    themes: {
+      "Stardew Valley": {
+        arVerbs: [
+          ["odla", "odlar", "grow"],
+          ["vattna", "vattnar", "water"],
+          ["plantera", "planterar", "plant"],
+          ["fiska", "fiskar", "fish"],
+          ["skörda", "skördar", "harvest"],
+        ],
+        erVerbs: [
+          ["sälja", "säljer", "sell"],
+          ["gräva", "gräver", "dig"],
+          ["bygga", "bygger", "build"],
+          ["sova", "sover", "sleep"],
+        ],
+        shortVerbs: [
+          ["se", "ser", "see"],
+          ["gå", "går", "go"],
+          ["bo", "bor", "live"],
+        ],
+        v2: [
+          ["Jag", "odlar", "majs på gården."],
+          ["Varje dag", "vattnar", "jag blommorna."],
+          ["I sjön", "fiskar", "jag på morgonen."],
+          ["På hösten", "skördar", "jag äpplen."],
+          ["I gruvan", "gräver", "jag efter guld."],
+        ],
+        questions: [
+          ["Odlar du majs?", "Do you grow corn?"],
+          ["Har du en yxa?", "Do you have an axe?"],
+          ["Var är kon?", "Where is the cow?"],
+          ["Vad odlar du?", "What are you growing?"],
+        ],
+        negation: [
+          ["Jag fiskar inte på vintern.", "I don’t fish in winter."],
+          ["Blommorna växer inte i gruvan.", "The flowers don’t grow in the mine."],
+        ],
+        drill: [
+          { q: "vattna", answer: "vattnar, vattna" },
+          { q: "sälja", answer: "säljer, sälj" },
+          { q: "fiska", answer: "fiskar, fiska" },
+          { q: "gräva", answer: "gräver, gräv" },
+        ],
+        v2ex: [
+          { q: "Jag odlar majs varje dag. [varje dag]", answer: "Varje dag odlar jag majs." },
+          { q: "Jag fiskar i sjön på morgonen. [på morgonen]", answer: "På morgonen fiskar jag i sjön." },
+        ],
+        translate: [
+          { q: "Do you have an axe?", answer: "Har du en yxa?" },
+          { q: "I don’t water the flowers in winter.", answer: "Jag vattnar inte blommorna på vintern." },
+          { q: "Where is the cow?", answer: "Var är kon?" },
         ],
       },
-      {
-        type: "prose",
-        text: "Compare English “I catch / he catches”, or the six endings Spanish makes you learn. Swedish has one.",
-      },
-      { type: "heading", text: "Present tense: three groups and two irregulars" },
-      {
-        type: "table",
-        headers: ["Group", "Infinitive", "Present", "Meaning"],
-        rows: [
-          ["<b>-ar verbs</b>", "fånga", "fångar", "catch"],
-          ["", "träna", "tränar", "train"],
-          ["", "kasta", "kastar", "throw"],
-          ["", "kämpa", "kämpar", "fight"],
-          ["<b>-er verbs</b>", "springa", "springer", "run"],
-          ["", "vinna", "vinner", "win"],
-          ["", "välja", "väljer", "choose"],
-          ["", "använda", "använder", "use"],
-          ["", "sova", "sover", "sleep"],
-          ["", "flyga", "flyger", "fly"],
-          ["", "byta", "byter", "trade"],
-          ["<b>short verbs</b>", "se", "ser", "see"],
-          ["", "gå", "går", "walk, go"],
-          ["", "tro", "tror", "believe"],
-          ["<b>irregular</b>", "vara", "är", "be"],
-          ["", "ha", "har", "have"],
+      "Animal Crossing": {
+        arVerbs: [
+          ["fånga", "fångar", "catch"],
+          ["plantera", "planterar", "plant"],
+          ["samla", "samlar", "collect"],
+          ["vattna", "vattnar", "water"],
+        ],
+        erVerbs: [
+          ["sälja", "säljer", "sell"],
+          ["bygga", "bygger", "build"],
+          ["springa", "springer", "run"],
+          ["sova", "sover", "sleep"],
+        ],
+        shortVerbs: [
+          ["se", "ser", "see"],
+          ["gå", "går", "go"],
+          ["bo", "bor", "live"],
+        ],
+        v2: [
+          ["Jag", "fångar", "en insekt i trädgården."],
+          ["Varje dag", "vattnar", "jag blommorna."],
+          ["På ön", "bor", "jag med mina grannar."],
+          ["Idag", "säljer", "jag frukt."],
+          ["I museet", "ser", "jag fiskar."],
+        ],
+        questions: [
+          ["Fångar du insekter?", "Do you catch bugs?"],
+          ["Har du en spade?", "Do you have a shovel?"],
+          ["Var bor grannen?", "Where does the neighbour live?"],
+          ["Vad säljer du?", "What are you selling?"],
+        ],
+        negation: [
+          ["Jag säljer inte mina äpplen.", "I don’t sell my apples."],
+          ["Grannarna sover inte på dagen.", "The neighbours don’t sleep during the day."],
+        ],
+        drill: [
+          { q: "samla", answer: "samlar, samla" },
+          { q: "sälja", answer: "säljer, sälj" },
+          { q: "fånga", answer: "fångar, fånga" },
+          { q: "bygga", answer: "bygger, bygg" },
+        ],
+        v2ex: [
+          { q: "Jag fångar insekter varje dag. [varje dag]", answer: "Varje dag fångar jag insekter." },
+          { q: "Jag planterar blommor på ön. [på ön]", answer: "På ön planterar jag blommor." },
+        ],
+        translate: [
+          { q: "Do you have a shovel?", answer: "Har du en spade?" },
+          { q: "I don’t sell fruit.", answer: "Jag säljer inte frukt." },
+          { q: "Where is the neighbour?", answer: "Var är grannen?" },
         ],
       },
-      { type: "heading", text: "The imperative" },
-      {
-        type: "prose",
-        text: "For giving orders — which is most of what you do in a battle — strip the verb back to its bare stem.",
-      },
-      {
-        type: "rules",
-        items: [
-          "<b>-ar verbs</b> drop the <em>-r</em> · Fånga den! · Kasta pokébollen! · Träna mer!",
-          "<b>-er verbs</b> drop the <em>-er</em> · Spring! · Använd Tackle! · Välj en pokémon!",
+      Bunnies: {
+        arVerbs: [
+          ["hoppa", "hoppar", "jump"],
+          ["klappa", "klappar", "pet"],
+          ["vakna", "vaknar", "wake up"],
         ],
-      },
-      { type: "heading", text: "The V2 rule" },
-      {
-        type: "prose",
-        text: "In a Swedish main clause the verb must be the <strong>second element</strong>. Not the second word — the second chunk. If something else takes the first slot, the subject gets bumped to after the verb.",
-      },
-      {
-        type: "table",
-        caption: "The verb column never moves",
-        headers: ["First element", "Verb", "Rest"],
-        rows: [
-          ["Jag", "fångar", "en Pikachu i skogen."],
-          ["Nu", "fångar", "jag en Pikachu."],
-          ["I skogen", "fångar", "jag en Pikachu."],
-          ["Varje dag", "tränar", "jag med mina pokémon."],
-          ["I gräset", "sover", "en Snorlax."],
+        erVerbs: [
+          ["springa", "springer", "run"],
+          ["äta", "äter", "eat"],
+          ["gräva", "gräver", "dig"],
+          ["sova", "sover", "sleep"],
+          ["leka", "leker", "play"],
         ],
-      },
-      {
-        type: "note",
-        text: "English says “In the forest, <em>I catch</em> a Pikachu.” Swedish says “In the forest <em>catch I</em> a Pikachu.” Build this reflex early and you’ll sound far more natural than your vocabulary deserves.",
-      },
-      { type: "heading", text: "Questions and negation" },
-      {
-        type: "prose",
-        text: "For a yes/no question, just swap the subject and the verb. There is no “do” helper verb in Swedish.",
-      },
-      {
-        type: "examples",
-        items: [
-          ["Fångar du Pikachu?", "Are you catching Pikachu?"],
-          ["Är den stark?", "Is it strong?"],
-          ["Har du en pokéboll?", "Do you have a Poké Ball?"],
+        shortVerbs: [
+          ["se", "ser", "see"],
+          ["gå", "går", "go"],
         ],
-      },
-      {
-        type: "prose",
-        text: "Question words take the first slot, and the verb still lands second.",
-      },
-      {
-        type: "examples",
-        items: [
-          ["Var är Pikachu?", "Where is Pikachu?"],
-          ["Vad gör du?", "What are you doing?"],
-          ["Vilken pokémon väljer du?", "Which Pokémon do you choose?"],
+        v2: [
+          ["Kaninen", "hoppar", "i gräset."],
+          ["Varje morgon", "äter", "kaninen morötter."],
+          ["I hålet", "sover", "kaninerna."],
+          ["Nu", "springer", "kaninen snabbt."],
+          ["I hagen", "leker", "kaninerna."],
         ],
-      },
-      {
-        type: "prose",
-        text: "To negate, put <em>inte</em> <strong>after</strong> the verb.",
-      },
-      {
-        type: "examples",
-        items: [
-          ["Jag fångar inte Mewtwo.", "I’m not catching Mewtwo."],
-          ["Den sover inte.", "It isn’t sleeping."],
+        questions: [
+          ["Springer kaninen snabbt?", "Does the bunny run fast?"],
+          ["Har du en morot?", "Do you have a carrot?"],
+          ["Var sover kaninerna?", "Where do the bunnies sleep?"],
+          ["Vad äter kaninen?", "What is the bunny eating?"],
         ],
-      },
-      {
-        type: "note",
-        text: "Swedish has no continuous tense. <em>Jag springer</em> means both “I run” and “I am running” — one form, two English translations.",
-      },
-      {
-        type: "exercise",
-        instruction: "Give the present tense and the imperative, separated by a space or comma.",
-        items: [
-          { q: "kasta", answer: "kastar, kasta" },
-          { q: "använda", answer: "använder, använd" },
+        negation: [
+          ["Kaninen sover inte på dagen.", "The bunny doesn’t sleep during the day."],
+          ["Kaninerna äter inte kött.", "The bunnies don’t eat meat."],
+        ],
+        drill: [
+          { q: "hoppa", answer: "hoppar, hoppa" },
           { q: "springa", answer: "springer, spring" },
-          { q: "träna", answer: "tränar, träna" },
+          { q: "gräva", answer: "gräver, gräv" },
+          { q: "äta", answer: "äter, ät" },
+        ],
+        v2ex: [
+          { q: "Kaninen hoppar i gräset varje dag. [varje dag]", answer: "Varje dag hoppar kaninen i gräset." },
+          { q: "Kaninen sover i hålet på dagen. [på dagen]", answer: "På dagen sover kaninen i hålet." },
+        ],
+        translate: [
+          { q: "Does the bunny eat carrots?", answer: "Äter kaninen morötter?" },
+          { q: "The bunny doesn’t sleep at night. (at night = på natten)", answer: "Kaninen sover inte på natten." },
+          { q: "Where is the bunny?", answer: "Var är kaninen?" },
         ],
       },
-      {
-        type: "exercise",
-        instruction: "Rewrite the sentence starting with the phrase in brackets. Watch the V2 rule.",
-        items: [
-          { q: "Jag tränar varje dag. [varje dag]", answer: "Varje dag tränar jag." },
-          {
-            q: "Jag fångar en Bulbasaur i skogen. [i skogen]",
-            answer: "I skogen fångar jag en Bulbasaur.",
-          },
+      Japan: {
+        arVerbs: [
+          ["fotografera", "fotograferar", "photograph"],
+          ["vandra", "vandrar", "hike"],
+          ["handla", "handlar", "shop"],
+        ],
+        erVerbs: [
+          ["resa", "reser", "travel"],
+          ["besöka", "besöker", "visit"],
+          ["äta", "äter", "eat"],
+          ["sova", "sover", "sleep"],
+        ],
+        shortVerbs: [
+          ["se", "ser", "see"],
+          ["gå", "går", "go"],
+          ["bo", "bor", "live"],
+        ],
+        v2: [
+          ["Jag", "reser", "med tåg."],
+          ["I Tokyo", "besöker", "jag ett tempel."],
+          ["Varje dag", "äter", "jag ris."],
+          ["På berget", "vandrar", "jag långt."],
+          ["Nu", "fotograferar", "jag templet."],
+        ],
+        questions: [
+          ["Reser du med tåg?", "Do you travel by train?"],
+          ["Har du en biljett?", "Do you have a ticket?"],
+          ["Var ligger templet?", "Where is the temple?"],
+          ["Vad äter du?", "What are you eating?"],
+        ],
+        negation: [
+          ["Jag äter inte kött.", "I don’t eat meat."],
+          ["Tåget går inte på natten.", "The train doesn’t run at night."],
+        ],
+        drill: [
+          { q: "vandra", answer: "vandrar, vandra" },
+          { q: "besöka", answer: "besöker, besök" },
+          { q: "äta", answer: "äter, ät" },
+          { q: "resa", answer: "reser, res" },
+        ],
+        v2ex: [
+          { q: "Jag besöker ett tempel i Tokyo. [i Tokyo]", answer: "I Tokyo besöker jag ett tempel." },
+          { q: "Jag reser med tåg varje dag. [varje dag]", answer: "Varje dag reser jag med tåg." },
+        ],
+        translate: [
+          { q: "Do you travel by train?", answer: "Reser du med tåg?" },
+          { q: "I don’t eat meat.", answer: "Jag äter inte kött." },
+          { q: "Where is the temple?", answer: "Var är templet?" },
         ],
       },
-      {
-        type: "exercise",
-        instruction: "Translate into Swedish.",
-        items: [
-          { q: "Do you have a Poké Ball?", answer: "Har du en pokéboll?" },
-          { q: "I don’t use Thunderbolt.", answer: "Jag använder inte Thunderbolt." },
-          { q: "Which Pokémon do you choose?", answer: "Vilken pokémon väljer du?" },
+      Traveling: {
+        arVerbs: [
+          ["packa", "packar", "pack"],
+          ["vandra", "vandrar", "hike"],
+          ["boka", "bokar", "book"],
+        ],
+        erVerbs: [
+          ["resa", "reser", "travel"],
+          ["flyga", "flyger", "fly"],
+          ["åka", "åker", "go, ride"],
+          ["besöka", "besöker", "visit"],
+        ],
+        shortVerbs: [
+          ["se", "ser", "see"],
+          ["gå", "går", "go"],
+          ["bo", "bor", "stay"],
+        ],
+        v2: [
+          ["Jag", "reser", "till Italien."],
+          ["Imorgon", "flyger", "jag hem."],
+          ["På hotellet", "bor", "jag i en vecka."],
+          ["Varje sommar", "reser", "jag utomlands."],
+          ["Nu", "packar", "jag min väska."],
+        ],
+        questions: [
+          ["Reser du ofta?", "Do you travel often?"],
+          ["Har du ditt pass?", "Do you have your passport?"],
+          ["Var ligger hotellet?", "Where is the hotel?"],
+          ["Vart reser du?", "Where are you travelling to?"],
+        ],
+        negation: [
+          ["Bussen går inte idag.", "The bus doesn’t run today."],
+          ["Jag reser inte på vintern.", "I don’t travel in winter."],
+        ],
+        drill: [
+          { q: "packa", answer: "packar, packa" },
+          { q: "flyga", answer: "flyger, flyg" },
+          { q: "boka", answer: "bokar, boka" },
+          { q: "resa", answer: "reser, res" },
+        ],
+        v2ex: [
+          { q: "Jag reser till Italien i sommar. [i sommar]", answer: "I sommar reser jag till Italien." },
+          { q: "Jag packar min väska varje resa. [varje resa]", answer: "Varje resa packar jag min väska." },
+        ],
+        translate: [
+          { q: "Do you have your passport?", answer: "Har du ditt pass?" },
+          { q: "I don’t fly in winter.", answer: "Jag flyger inte på vintern." },
+          { q: "Where is the hotel?", answer: "Var är hotellet?" },
         ],
       },
-    ],
+    },
+    build(t) {
+      return [
+        { type: "heading", text: "The good news" },
+        {
+          type: "prose",
+          text: "Swedish verbs <strong>do not change by person</strong>. One form covers everybody:",
+        },
+        examplesBlock([
+          ["jag pratar · du pratar · han/hon pratar", "I talk · you talk · he/she talks"],
+          ["vi pratar · ni pratar · de pratar", "we talk · you talk · they talk"],
+        ]),
+        {
+          type: "prose",
+          text: "Compare English “I talk / he talks”, or the six endings Spanish makes you learn. Swedish has one.",
+        },
+        { type: "heading", text: "Present tense: three groups and two irregulars" },
+        verbTable(t),
+        { type: "heading", text: "The imperative" },
+        {
+          type: "prose",
+          text: "For giving orders — which is a lot of what you do out in the world — strip the verb back to its bare stem.",
+        },
+        {
+          type: "rules",
+          items: [
+            "<b>-ar verbs</b> drop the <em>-r</em> · prata → Prata!, öppna → Öppna!",
+            "<b>-er verbs</b> drop the <em>-er</em> · springa → Spring!, läsa → Läs!",
+          ],
+        },
+        { type: "heading", text: "The V2 rule" },
+        {
+          type: "prose",
+          text: "In a Swedish main clause the verb must be the <strong>second element</strong>. Not the second word — the second chunk. If something else takes the first slot, the subject gets bumped to after the verb.",
+        },
+        {
+          type: "table",
+          caption: "The verb column never moves",
+          headers: ["First element", "Verb", "Rest"],
+          rows: t.v2,
+        },
+        {
+          type: "note",
+          text: "English keeps the subject first: “Every day, <em>I train</em>.” Swedish puts the verb second and bumps the subject after it: “Every day <em>train I</em>.” Build this reflex early and you’ll sound far more natural than your vocabulary deserves.",
+        },
+        { type: "heading", text: "Questions and negation" },
+        {
+          type: "prose",
+          text: "For a yes/no question, just swap the subject and the verb. There is no “do” helper verb in Swedish, and question words take the first slot with the verb still landing second.",
+        },
+        examplesBlock(t.questions),
+        {
+          type: "prose",
+          text: "To negate, put <em>inte</em> <strong>after</strong> the verb.",
+        },
+        examplesBlock(t.negation),
+        {
+          type: "note",
+          text: "Swedish has no continuous tense. <em>Jag springer</em> means both “I run” and “I am running” — one form, two English translations.",
+        },
+        exercise(
+          "Give the present tense and the imperative, separated by a space or comma.",
+          t.drill
+        ),
+        exercise(
+          "Rewrite the sentence starting with the phrase in brackets. Watch the V2 rule.",
+          t.v2ex
+        ),
+        exercise("Translate into Swedish.", t.translate),
+      ];
+    },
   },
 
+  /* -------------------------------- Lesson 3 -------------------------------- */
   {
     id: "adjectives",
     number: 3,
-    theme: "Bunnies",
+    section: "beginner",
+    short: "Adjectives",
     title: "Adjectives and agreement",
     focus: "three forms · double definiteness",
     summary:
       "Adjectives change shape depending on the noun they describe — so this one builds directly on knowing en from ett.",
-    requires: "nouns",
-    blocks: [
-      {
-        type: "note",
-        text: "Do the <em>Nouns</em> lesson first. Every ending below depends on knowing whether a noun takes <em>en</em> or <em>ett</em>.",
-      },
-      { type: "heading", text: "The one big idea" },
-      {
-        type: "prose",
-        text: "Swedish adjectives have <strong>three forms</strong>, and the noun decides which one you use.",
-      },
-      {
-        type: "table",
-        headers: ["Noun type", "Adjective form", "Example"],
-        rows: [
-          ["en-word", "base form", "en <b>söt</b> kanin <span class=gloss>a cute bunny</span>"],
-          ["ett-word", "add <b>-t</b>", "ett <b>sött</b> öra <span class=gloss>a cute ear</span>"],
-          ["plural", "add <b>-a</b>", "<b>söta</b> kaniner <span class=gloss>cute bunnies</span>"],
-          [
-            "anything definite",
-            "add <b>-a</b>",
-            "den <b>söta</b> kaninen <span class=gloss>the cute bunny</span>",
-          ],
+    requires: ["nouns", "verbs"],
+    themes: {
+      "Stardew Valley": {
+        adjectives: [
+          ["röd", "rött", "röda", "red"],
+          ["mogen", "moget", "mogna", "ripe"],
+          ["färsk", "färskt", "färska", "fresh"],
+          ["grön", "grönt", "gröna", "green"],
+          ["stor", "stort", "stora", "big"],
+          ["<b>liten</b>", "<b>litet</b>", "<b>små</b>", "small <span class=gloss>irregular</span>"],
+        ],
+        nouns: [
+          ["en gård <span class=gloss>farm</span>", "gården", "gårdar", "gårdarna"],
+          ["en blomma <span class=gloss>flower</span>", "blomman", "blommor", "blommorna"],
+          ["en pumpa <span class=gloss>pumpkin</span>", "pumpan", "pumpor", "pumporna"],
+          ["ett äpple <span class=gloss>apple</span>", "äpplet", "äpplen", "äpplena"],
+          ["ett frö <span class=gloss>seed</span>", "fröet", "frön", "fröna"],
+        ],
+        examples: [
+          ["En röd blomma växer i trädgården.", "A red flower grows in the garden."],
+          ["Den mogna pumpan är stor.", "The ripe pumpkin is big."],
+          ["Äpplena är gröna och färska.", "The apples are green and fresh."],
+          ["Gården är liten men fin.", "The farm is small but nice."],
+          ["Jag har två stora pumpor.", "I have two big pumpkins."],
+        ],
+        drill: [
+          { q: "ett ___ frö (färsk)", answer: "ett färskt frö" },
+          { q: "en ___ blomma (röd)", answer: "en röd blomma" },
+          { q: "tre ___ äpplen (mogen)", answer: "tre mogna äpplen" },
+          { q: "den ___ pumpan (stor)", answer: "den stora pumpan" },
+          { q: "det ___ fröet (liten)", answer: "det lilla fröet" },
+          { q: "Blomman är ___ (grön)", answer: "Blomman är grön." },
+        ],
+        translate: [
+          { q: "The red flower is big.", answer: "Den röda blomman är stor." },
+          { q: "I have a small green apple.", answer: "Jag har ett litet grönt äpple." },
+          { q: "The ripe pumpkins are fresh.", answer: "De mogna pumporna är färska." },
         ],
       },
-      { type: "heading", text: "Vocabulary" },
-      {
-        type: "table",
-        caption: "Adjectives",
-        headers: ["en-form", "ett-form", "plural / definite", "Meaning"],
-        rows: [
+      "Animal Crossing": {
+        adjectives: [
+          ["söt", "sött", "söta", "cute"],
+          ["glad", "glatt", "glada", "happy"],
+          ["vänlig", "vänligt", "vänliga", "friendly"],
+          ["färgglad", "färgglatt", "färgglada", "colourful"],
+          ["stor", "stort", "stora", "big"],
+          ["<b>liten</b>", "<b>litet</b>", "<b>små</b>", "small <span class=gloss>irregular</span>"],
+        ],
+        nouns: [
+          ["en granne <span class=gloss>neighbour</span>", "grannen", "grannar", "grannarna"],
+          ["en ö <span class=gloss>island</span>", "ön", "öar", "öarna"],
+          ["en frukt <span class=gloss>fruit</span>", "frukten", "frukter", "frukterna"],
+          ["ett hus <span class=gloss>house</span>", "huset", "hus", "husen"],
+          ["ett äpple <span class=gloss>apple</span>", "äpplet", "äpplen", "äpplena"],
+        ],
+        examples: [
+          ["En vänlig granne bor på ön.", "A friendly neighbour lives on the island."],
+          ["Den söta grannen har ett litet hus.", "The cute neighbour has a small house."],
+          ["Frukterna är färgglada.", "The fruit is colourful."],
+          ["Ön är liten men vacker.", "The island is small but beautiful."],
+          ["Jag har två glada grannar.", "I have two happy neighbours."],
+        ],
+        drill: [
+          { q: "ett ___ hus (liten)", answer: "ett litet hus" },
+          { q: "en ___ granne (vänlig)", answer: "en vänlig granne" },
+          { q: "tre ___ äpplen (söt)", answer: "tre söta äpplen" },
+          { q: "den ___ ön (stor)", answer: "den stora ön" },
+          { q: "det ___ huset (färgglad)", answer: "det färgglada huset" },
+          { q: "Grannen är ___ (glad)", answer: "Grannen är glad." },
+        ],
+        translate: [
+          { q: "The friendly neighbour is happy.", answer: "Den vänliga grannen är glad." },
+          { q: "I have a small colourful house.", answer: "Jag har ett litet färgglatt hus." },
+          { q: "The cute neighbours are friendly.", answer: "De söta grannarna är vänliga." },
+        ],
+      },
+      Bunnies: {
+        adjectives: [
           ["söt", "sött", "söta", "cute, sweet"],
           ["mjuk", "mjukt", "mjuka", "soft"],
           ["snabb", "snabbt", "snabba", "fast"],
@@ -1080,76 +1713,22 @@ const lessons = [
           ["<b>liten</b>", "<b>litet</b>", "<b>små</b>", "small <span class=gloss>irregular</span>"],
           ["glad", "glatt", "glada", "happy"],
         ],
-      },
-      {
-        type: "table",
-        caption: "Nouns",
-        headers: ["Indefinite", "Definite", "Plural", "Definite plural"],
-        rows: [
+        nouns: [
           ["en kanin <span class=gloss>bunny</span>", "kaninen", "kaniner", "kaninerna"],
           ["en tass <span class=gloss>paw</span>", "tassen", "tassar", "tassarna"],
           ["en svans <span class=gloss>tail</span>", "svansen", "svansar", "svansarna"],
           ["en morot <span class=gloss>carrot</span>", "moroten", "<b>morötter</b>", "morötterna"],
-          ["ett öra <span class=gloss>ear</span>", "öret", "<b>öron</b>", "öronen"],
+          ["ett öra <span class=gloss>ear</span>", "örat", "<b>öron</b>", "öronen"],
           ["ett hål <span class=gloss>hole</span>", "hålet", "hål", "hålen"],
         ],
-      },
-      {
-        type: "prose",
-        text: "<em>Morot</em> and <em>öra</em> have irregular plurals worth memorising as one-offs.",
-      },
-      { type: "heading", text: "Double definiteness" },
-      {
-        type: "prose",
-        text: "To say “the cute bunny”, Swedish marks definiteness <strong>twice</strong>: a free-standing article before the adjective, and the suffix on the noun.",
-      },
-      {
-        type: "table",
-        headers: ["", "Indefinite", "Definite"],
-        rows: [
-          ["en-word", "en söt kanin", "<b>den</b> söt<b>a</b> kanin<b>en</b>"],
-          ["ett-word", "ett sött öra", "<b>det</b> söt<b>a</b> öre<b>t</b>"],
-          ["plural", "söta kaniner", "<b>de</b> söt<b>a</b> kanin<b>erna</b>"],
-        ],
-      },
-      {
-        type: "prose",
-        text: "So <em>den / det / de</em> all mean “the”, chosen by gender and number. The redundancy feels wasteful on paper, but it makes spoken Swedish easy to parse.",
-      },
-      { type: "heading", text: "After “är” — no -a" },
-      {
-        type: "prose",
-        text: "When the adjective comes after the verb, it agrees with the subject but never takes <b>-a</b> in the singular.",
-      },
-      {
-        type: "examples",
-        items: [
-          ["Kaninen är söt.", "The bunny is cute."],
-          ["Öret är sött.", "The ear is cute."],
-          ["Kaninerna är söta.", "The bunnies are cute."],
-          ["Min kanin är liten.", "My bunny is small."],
-          ["Mina kaniner är små.", "My bunnies are small."],
-        ],
-      },
-      { type: "heading", text: "Sentences" },
-      {
-        type: "examples",
-        items: [
+        examples: [
           ["En liten vit kanin sover i hålet.", "A small white bunny is sleeping in the hole."],
           ["Den lurviga kaninen äter en morot.", "The fluffy bunny is eating a carrot."],
           ["Kaninens öron är långa och mjuka.", "The bunny’s ears are long and soft."],
           ["De små kaninerna är hungriga.", "The little bunnies are hungry."],
           ["Jag har två bruna kaniner.", "I have two brown bunnies."],
         ],
-      },
-      {
-        type: "note",
-        text: "<em>Liten</em> has a fourth form, <strong>lilla</strong>, used in the definite singular for both genders: den <em>lilla</em> kaninen, det <em>lilla</em> öret. The definite plural goes back to <em>små</em>: de <em>små</em> kaninerna.",
-      },
-      {
-        type: "exercise",
-        instruction: "Write the full phrase with the adjective in the right form.",
-        items: [
+        drill: [
           { q: "ett ___ öra (mjuk)", answer: "ett mjukt öra" },
           { q: "en ___ kanin (snabb)", answer: "en snabb kanin" },
           { q: "tre ___ morötter (stor)", answer: "tre stora morötter" },
@@ -1157,78 +1736,433 @@ const lessons = [
           { q: "det ___ hålet (liten)", answer: "det lilla hålet" },
           { q: "Kaninen är ___ (glad)", answer: "Kaninen är glad." },
         ],
-      },
-      {
-        type: "exercise",
-        instruction: "Translate into Swedish.",
-        items: [
+        translate: [
           { q: "The white bunny is fast.", answer: "Den vita kaninen är snabb." },
           { q: "I have a small brown bunny.", answer: "Jag har en liten brun kanin." },
-          {
-            q: "The little bunnies are eating carrots. (eat = äter)",
-            answer: "De små kaninerna äter morötter.",
-          },
+          { q: "The little bunnies are eating carrots. (eat = äter)", answer: "De små kaninerna äter morötter." },
         ],
       },
-    ],
+      Japan: {
+        adjectives: [
+          ["gammal", "gammalt", "gamla", "old"],
+          ["vacker", "vackert", "vackra", "beautiful"],
+          ["hög", "högt", "höga", "high, tall"],
+          ["lugn", "lugnt", "lugna", "calm"],
+          ["stor", "stort", "stora", "big"],
+          ["<b>liten</b>", "<b>litet</b>", "<b>små</b>", "small <span class=gloss>irregular</span>"],
+        ],
+        nouns: [
+          ["en stad <span class=gloss>city</span>", "staden", "städer", "städerna"],
+          ["en trädgård <span class=gloss>garden</span>", "trädgården", "trädgårdar", "trädgårdarna"],
+          ["ett tempel <span class=gloss>temple</span>", "templet", "tempel", "templen"],
+          ["ett berg <span class=gloss>mountain</span>", "berget", "berg", "bergen"],
+          ["ett tåg <span class=gloss>train</span>", "tåget", "tåg", "tågen"],
+        ],
+        examples: [
+          ["Ett gammalt tempel står på berget.", "An old temple stands on the mountain."],
+          ["Den vackra trädgården är lugn.", "The beautiful garden is calm."],
+          ["Bergen är höga.", "The mountains are high."],
+          ["Staden är stor men lugn.", "The city is big but calm."],
+          ["Jag ser två gamla tempel.", "I see two old temples."],
+        ],
+        drill: [
+          { q: "ett ___ tempel (gammal)", answer: "ett gammalt tempel" },
+          { q: "en ___ stad (stor)", answer: "en stor stad" },
+          { q: "tre ___ berg (hög)", answer: "tre höga berg" },
+          { q: "den ___ trädgården (vacker)", answer: "den vackra trädgården" },
+          { q: "det ___ tåget (liten)", answer: "det lilla tåget" },
+          { q: "Staden är ___ (lugn)", answer: "Staden är lugn." },
+        ],
+        translate: [
+          { q: "The old temple is beautiful.", answer: "Det gamla templet är vackert." },
+          { q: "I have a small calm garden.", answer: "Jag har en liten lugn trädgård." },
+          { q: "The high mountains are beautiful.", answer: "De höga bergen är vackra." },
+        ],
+      },
+      Traveling: {
+        adjectives: [
+          ["lång", "långt", "långa", "long"],
+          ["dyr", "dyrt", "dyra", "expensive"],
+          ["billig", "billigt", "billiga", "cheap"],
+          ["tung", "tungt", "tunga", "heavy"],
+          ["stor", "stort", "stora", "big"],
+          ["<b>liten</b>", "<b>litet</b>", "<b>små</b>", "small <span class=gloss>irregular</span>"],
+        ],
+        nouns: [
+          ["en resa <span class=gloss>trip</span>", "resan", "resor", "resorna"],
+          ["en väska <span class=gloss>suitcase</span>", "väskan", "väskor", "väskorna"],
+          ["en biljett <span class=gloss>ticket</span>", "biljetten", "biljetter", "biljetterna"],
+          ["ett hotell <span class=gloss>hotel</span>", "hotellet", "hotell", "hotellen"],
+          ["ett land <span class=gloss>country</span>", "landet", "länder", "länderna"],
+        ],
+        examples: [
+          ["En lång resa börjar imorgon.", "A long trip begins tomorrow."],
+          ["Den dyra biljetten ligger i väskan.", "The expensive ticket is in the bag."],
+          ["Väskorna är tunga.", "The suitcases are heavy."],
+          ["Hotellet är billigt men fint.", "The hotel is cheap but nice."],
+          ["Jag besöker två stora länder.", "I visit two big countries."],
+        ],
+        drill: [
+          { q: "ett ___ hotell (billig)", answer: "ett billigt hotell" },
+          { q: "en ___ resa (lång)", answer: "en lång resa" },
+          { q: "tre ___ väskor (tung)", answer: "tre tunga väskor" },
+          { q: "den ___ biljetten (dyr)", answer: "den dyra biljetten" },
+          { q: "det ___ landet (liten)", answer: "det lilla landet" },
+          { q: "Resan är ___ (lång)", answer: "Resan är lång." },
+        ],
+        translate: [
+          { q: "The long trip is expensive.", answer: "Den långa resan är dyr." },
+          { q: "I have a small cheap bag.", answer: "Jag har en liten billig väska." },
+          { q: "The heavy suitcases are big.", answer: "De tunga väskorna är stora." },
+        ],
+      },
+    },
+    build(t, themeName) {
+      return [
+        {
+          type: "note",
+          text: "Every ending below depends on knowing whether a noun takes <em>en</em> or <em>ett</em> — so keep the Nouns lesson handy.",
+        },
+        { type: "heading", text: "The one big idea" },
+        {
+          type: "prose",
+          text: "Swedish adjectives have <strong>three forms</strong>, and the noun decides which one you use.",
+        },
+        {
+          type: "table",
+          headers: ["Noun type", "Adjective form", "Example"],
+          rows: [
+            ["en-word", "base form", "en <b>fin</b> bil <span class=gloss>a nice car</span>"],
+            ["ett-word", "add <b>-t</b>", "ett <b>fint</b> hus <span class=gloss>a nice house</span>"],
+            ["plural", "add <b>-a</b>", "<b>fina</b> bilar <span class=gloss>nice cars</span>"],
+            ["anything definite", "add <b>-a</b>", "den <b>fina</b> bilen <span class=gloss>the nice car</span>"],
+          ],
+        },
+        { type: "heading", text: themeName + " vocabulary" },
+        {
+          type: "table",
+          caption: "Adjectives",
+          headers: ["en-form", "ett-form", "plural / definite", "Meaning"],
+          rows: t.adjectives,
+        },
+        nounTable("Nouns", t.nouns),
+        { type: "heading", text: "Double definiteness" },
+        {
+          type: "prose",
+          text: "To say “the nice car”, Swedish marks definiteness <strong>twice</strong>: a free-standing article before the adjective, and the suffix on the noun.",
+        },
+        {
+          type: "table",
+          headers: ["", "Indefinite", "Definite"],
+          rows: [
+            ["en-word", "en fin bil", "<b>den</b> fin<b>a</b> bil<b>en</b>"],
+            ["ett-word", "ett fint hus", "<b>det</b> fin<b>a</b> hus<b>et</b>"],
+            ["plural", "fina bilar", "<b>de</b> fin<b>a</b> bil<b>arna</b>"],
+          ],
+        },
+        {
+          type: "prose",
+          text: "So <em>den / det / de</em> all mean “the”, chosen by gender and number. The redundancy feels wasteful on paper, but it makes spoken Swedish easy to parse.",
+        },
+        { type: "heading", text: "After “är” — no -a" },
+        {
+          type: "prose",
+          text: "When the adjective comes after the verb, it agrees with the subject but never takes <b>-a</b> in the singular.",
+        },
+        examplesBlock([
+          ["Bilen är fin.", "The car is nice."],
+          ["Huset är fint.", "The house is nice."],
+          ["Bilarna är fina.", "The cars are nice."],
+        ]),
+        {
+          type: "note",
+          text: "<em>Liten</em> has a fourth form, <strong>lilla</strong>, used in the definite singular for both genders: den <em>lilla</em> bilen, det <em>lilla</em> huset. The definite plural goes back to <em>små</em>: de <em>små</em> bilarna.",
+        },
+        { type: "heading", text: "Sentences" },
+        examplesBlock(t.examples),
+        exercise("Write the full phrase with the adjective in the right form.", t.drill),
+        exercise("Translate into Swedish.", t.translate),
+      ];
+    },
+  },
+
+  /* -------------------------------- Lesson 4 -------------------------------- */
+  {
+    id: "pronouns",
+    number: 4,
+    section: "beginner",
+    short: "Pronouns",
+    title: "Pronouns and possessives",
+    focus: "personal pronouns · min/mitt/mina agreement",
+    summary:
+      "Swedish pronouns barely change, and “my/your/our” agree with the noun they own — the same en/ett/plural split you already know.",
+    requires: ["nouns"],
+    themes: {
+      "Stardew Valley": {
+        examples: [
+          ["Min gård är stor.", "My farm is big."],
+          ["Mitt frö växer snabbt.", "My seed grows fast."],
+          ["Mina hönor sover.", "My hens are sleeping."],
+          ["Är det din yxa?", "Is that your axe?"],
+          ["Jag ger honom ett äpple.", "I give him an apple."],
+        ],
+        drill: [
+          { q: "___ gård (min)", answer: "min gård" },
+          { q: "___ frö (min)", answer: "mitt frö" },
+          { q: "___ blommor (min)", answer: "mina blommor" },
+          { q: "___ hus (din)", answer: "ditt hus" },
+          { q: "___ fiskar (din)", answer: "dina fiskar" },
+        ],
+        translate: [
+          { q: "My farm is big.", answer: "Min gård är stor." },
+          { q: "Is that your axe?", answer: "Är det din yxa?" },
+          { q: "I see her.", answer: "Jag ser henne." },
+        ],
+      },
+      "Animal Crossing": {
+        examples: [
+          ["Min ö är liten.", "My island is small."],
+          ["Mitt hus är gult.", "My house is yellow."],
+          ["Mina grannar är snälla.", "My neighbours are kind."],
+          ["Är det din spade?", "Is that your shovel?"],
+          ["Jag ger henne en frukt.", "I give her a fruit."],
+        ],
+        drill: [
+          { q: "___ ö (min)", answer: "min ö" },
+          { q: "___ hus (min)", answer: "mitt hus" },
+          { q: "___ grannar (min)", answer: "mina grannar" },
+          { q: "___ tält (din)", answer: "ditt tält" },
+          { q: "___ äpplen (din)", answer: "dina äpplen" },
+        ],
+        translate: [
+          { q: "My island is small.", answer: "Min ö är liten." },
+          { q: "Is that your shovel?", answer: "Är det din spade?" },
+          { q: "I see them.", answer: "Jag ser dem." },
+        ],
+      },
+      Bunnies: {
+        examples: [
+          ["Min kanin är vit.", "My bunny is white."],
+          ["Mitt bo är varmt.", "My burrow is warm."],
+          ["Mina kaniner sover.", "My bunnies are sleeping."],
+          ["Är det din morot?", "Is that your carrot?"],
+          ["Jag ser den.", "I see it."],
+        ],
+        drill: [
+          { q: "___ kanin (min)", answer: "min kanin" },
+          { q: "___ öra (min)", answer: "mitt öra" },
+          { q: "___ kaniner (min)", answer: "mina kaniner" },
+          { q: "___ hål (din)", answer: "ditt hål" },
+          { q: "___ morötter (din)", answer: "dina morötter" },
+        ],
+        translate: [
+          { q: "My bunny is small.", answer: "Min kanin är liten." },
+          { q: "Is that your carrot?", answer: "Är det din morot?" },
+          { q: "I see him.", answer: "Jag ser honom." },
+        ],
+      },
+      Japan: {
+        examples: [
+          ["Min stad är stor.", "My city is big."],
+          ["Mitt tåg är sent.", "My train is late."],
+          ["Mina vänner reser med mig.", "My friends travel with me."],
+          ["Är det din biljett?", "Is that your ticket?"],
+          ["Jag ger honom en skål.", "I give him a bowl."],
+        ],
+        drill: [
+          { q: "___ stad (min)", answer: "min stad" },
+          { q: "___ tempel (min)", answer: "mitt tempel" },
+          { q: "___ vänner (min)", answer: "mina vänner" },
+          { q: "___ tåg (din)", answer: "ditt tåg" },
+          { q: "___ skålar (din)", answer: "dina skålar" },
+        ],
+        translate: [
+          { q: "My city is big.", answer: "Min stad är stor." },
+          { q: "Is that your ticket?", answer: "Är det din biljett?" },
+          { q: "I travel with her.", answer: "Jag reser med henne." },
+        ],
+      },
+      Traveling: {
+        examples: [
+          ["Min väska är tung.", "My bag is heavy."],
+          ["Mitt pass är nytt.", "My passport is new."],
+          ["Mina biljetter är dyra.", "My tickets are expensive."],
+          ["Är det ditt hotell?", "Is that your hotel?"],
+          ["Jag reser med dem.", "I travel with them."],
+        ],
+        drill: [
+          { q: "___ väska (min)", answer: "min väska" },
+          { q: "___ pass (min)", answer: "mitt pass" },
+          { q: "___ biljetter (min)", answer: "mina biljetter" },
+          { q: "___ hotell (din)", answer: "ditt hotell" },
+          { q: "___ resor (din)", answer: "dina resor" },
+        ],
+        translate: [
+          { q: "My bag is heavy.", answer: "Min väska är tung." },
+          { q: "Is that your hotel?", answer: "Är det ditt hotell?" },
+          { q: "I travel with them.", answer: "Jag reser med dem." },
+        ],
+      },
+    },
+    build(t, themeName) {
+      return [
+        {
+          type: "prose",
+          text: "Swedish pronouns are refreshingly regular. The <strong>subject</strong> form does the acting; the <strong>object</strong> form receives it — and possessives agree with the thing owned, exactly like adjectives.",
+        },
+        { type: "heading", text: "Personal pronouns" },
+        {
+          type: "table",
+          headers: ["Subject", "Object", "Meaning"],
+          rows: [
+            ["jag", "mig", "I / me"],
+            ["du", "dig", "you <span class=gloss>one person</span>"],
+            ["han", "honom", "he / him"],
+            ["hon", "henne", "she / her"],
+            ["den / det", "den / det", "it <span class=gloss>en / ett</span>"],
+            ["vi", "oss", "we / us"],
+            ["ni", "er", "you <span class=gloss>several</span>"],
+            ["de", "dem", "they / them"],
+          ],
+        },
+        {
+          type: "note",
+          text: "<em>de</em> and <em>dem</em> are both said “dom” out loud, but keep them apart in writing: <em>de</em> is the subject, <em>dem</em> the object.",
+        },
+        { type: "heading", text: "Possessives" },
+        {
+          type: "prose",
+          text: "“My”, “your” and “our” change form to match the noun they sit in front of — en-word, ett-word or plural — just like adjectives do.",
+        },
+        {
+          type: "table",
+          headers: ["", "en-word", "ett-word", "plural"],
+          rows: [
+            ["my", "min", "mitt", "mina"],
+            ["your <span class=gloss>sg</span>", "din", "ditt", "dina"],
+            ["our", "vår", "vårt", "våra"],
+            ["your <span class=gloss>pl</span>", "er", "ert", "era"],
+          ],
+        },
+        {
+          type: "note",
+          text: "<em>hans</em> (his), <em>hennes</em> (her), <em>dess</em> (its) and <em>deras</em> (their) never change: <em>hans</em> bil, <em>hennes</em> hus, <em>deras</em> barn.",
+        },
+        { type: "heading", text: themeName + " in practice" },
+        examplesBlock(t.examples),
+        exercise("Choose the right form: min, mitt or mina.", t.drill),
+        exercise("Translate into Swedish.", t.translate),
+      ];
+    },
   },
 ];
 
-const afterwards = {
-  title: "After these three",
-  text: "With nouns, verbs, word order and adjectives you can build real sentences. Natural next steps: pronouns and possessives (min/mitt/mina), the past tense, and subordinate clauses — where the V2 rule breaks down and <em>inte</em> moves in front of the verb.",
-};
-
-
 const app = document.getElementById("app");
 
-/* ------------------------------------------------------------------
-   Progress storage
+/* ==================================================================
+   Storage
    localStorage is the store; if it's unavailable (private mode, an
    embedded preview) we fall back to memory so nothing breaks.
-   ------------------------------------------------------------------ */
+   ================================================================== */
 
-const KEY = "swedish-grammar:completed";
-let memory = [];
+const K_PROGRESS = "swedish-grammar:progress"; // { lessonId: [themeName, ...] }
+const K_SEEN = "swedish-grammar:seen"; // [lessonId, ...]
+const K_THEME = "swedish-grammar:theme"; // { lessonId: themeName }
+const K_CALLOUT = "swedish-grammar:callout"; // dismissed UPDATE_ID
 
-function readCompleted() {
-  try {
-    const raw = localStorage.getItem(KEY);
-    return raw ? JSON.parse(raw) : [];
-  } catch {
-    return memory;
-  }
+const store = {
+  mem: {},
+  read(key, fallback) {
+    try {
+      const raw = localStorage.getItem(key);
+      if (raw != null) return JSON.parse(raw);
+      return key in this.mem ? this.mem[key] : fallback;
+    } catch {
+      return key in this.mem ? this.mem[key] : fallback;
+    }
+  },
+  write(key, val) {
+    this.mem[key] = val;
+    try {
+      localStorage.setItem(key, JSON.stringify(val));
+    } catch {
+      /* memory fallback already updated */
+    }
+  },
+};
+
+/* --- progress (per theme) --- */
+function progressMap() {
+  return store.read(K_PROGRESS, {});
+}
+function themesDone(id) {
+  return progressMap()[id] || [];
+}
+function lessonDone(id) {
+  return themesDone(id).length > 0;
+}
+function themeDone(id, theme) {
+  return themesDone(id).includes(theme);
+}
+function toggleTheme(id, theme) {
+  const p = progressMap();
+  const arr = p[id] || [];
+  p[id] = arr.includes(theme) ? arr.filter((x) => x !== theme) : [...arr, theme];
+  store.write(K_PROGRESS, p);
+  return p[id].includes(theme);
 }
 
-function writeCompleted(ids) {
-  memory = ids;
-  try {
-    localStorage.setItem(KEY, JSON.stringify(ids));
-  } catch {
-    /* memory fallback already updated */
-  }
+/* --- seen lessons (drives the "New" badge) --- */
+function isSeen(id) {
+  return store.read(K_SEEN, []).includes(id);
+}
+function markSeen(id) {
+  const s = store.read(K_SEEN, []);
+  if (!s.includes(id)) store.write(K_SEEN, [...s, id]);
 }
 
-function isDone(id) {
-  return readCompleted().includes(id);
+/* --- selected theme per lesson --- */
+function selectedTheme(id) {
+  const t = store.read(K_THEME, {});
+  return t[id] && THEMES.includes(t[id]) ? t[id] : THEMES[0];
+}
+function setSelectedTheme(id, theme) {
+  const t = store.read(K_THEME, {});
+  t[id] = theme;
+  store.write(K_THEME, t);
 }
 
-function toggleDone(id) {
-  const ids = readCompleted();
-  const next = ids.includes(id) ? ids.filter((x) => x !== id) : [...ids, id];
-  writeCompleted(next);
-  return next.includes(id);
+/* --- prerequisites --- */
+function isLocked(lesson) {
+  return (lesson.requires || []).some((r) => !lessonDone(r));
+}
+function lockNames(lesson) {
+  return (lesson.requires || []).map((r) => {
+    const l = lessons.find((x) => x.id === r);
+    return l ? l.short : r;
+  });
 }
 
-/* ------------------------------------------------------------------
+/* ==================================================================
    Helpers
-   ------------------------------------------------------------------ */
+   ================================================================== */
 
 const CHECK_SVG =
   '<svg viewBox="0 0 16 16" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 8.5l3.5 3.5 7.5-8"/></svg>';
 
+const LOCK_SVG =
+  '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><rect x="3.3" y="7" width="9.4" height="6.6" rx="1.3"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2"/></svg>';
+
+let activeSection = "beginner";
+
 function esc(s) {
   return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+function joinNames(names) {
+  if (names.length <= 1) return names.join("");
+  if (names.length === 2) return names[0] + " and " + names[1];
+  return names.slice(0, -1).join(", ") + " and " + names[names.length - 1];
 }
 
 // Forgiving comparison: case, punctuation, spacing and accents are ignored, so
@@ -1243,114 +2177,202 @@ function normalise(s) {
     .trim();
 }
 
-/* ------------------------------------------------------------------
+/* ==================================================================
    Overview
-   ------------------------------------------------------------------ */
+   ================================================================== */
 
 function renderOverview() {
-  const completed = readCompleted();
-  const pct = Math.round((completed.length / lessons.length) * 100);
+  const section = sections.find((s) => s.id === activeSection) || sections[0];
+  const sectionLessons = lessons.filter((l) => l.section === section.id);
+  const doneCount = sectionLessons.filter((l) => lessonDone(l.id)).length;
+  const anyProgress = lessons.some((l) => lessonDone(l.id));
+  const pct = sectionLessons.length ? Math.round((doneCount / sectionLessons.length) * 100) : 0;
+  const showCallout = store.read(K_CALLOUT, "") !== UPDATE_ID;
 
   app.innerHTML = `
     <header class="masthead">
-      <p class="eyebrow">Grammar for complete beginners</p>
+      <p class="eyebrow">Grammar for beginners</p>
       <h1>Swedish, on <em>your</em> terms</h1>
-      <p>Three lessons covering the foundations — nouns, verbs, adjectives — each built
-      out of vocabulary you actually care about.</p>
+      <p>Short, focused Swedish grammar lessons built around vocabulary you actually
+      care about. Pick a lesson, choose a theme, and practise as you go.</p>
     </header>
 
+    ${
+      showCallout
+        ? `<div class="callout" role="status">
+             <div class="callout-body">
+               <p class="callout-eyebrow">What’s new</p>
+               <p class="callout-text">${UPDATE_TEXT}</p>
+             </div>
+             <button type="button" class="callout-dismiss" id="dismiss-callout">Got it</button>
+           </div>`
+        : ""
+    }
+
+    <div class="tabs" role="tablist" aria-label="Levels">
+      ${sections
+        .map((s) =>
+          s.enabled
+            ? `<button type="button" class="tab ${s.id === activeSection ? "is-active" : ""}"
+                 role="tab" aria-selected="${s.id === activeSection}" data-section="${s.id}">
+                 ${s.label}
+               </button>`
+            : `<span class="tab is-disabled" role="tab" aria-disabled="true">
+                 ${s.label}<span class="tab-soon">Coming soon</span>
+               </span>`
+        )
+        .join("")}
+    </div>
+
     <div class="progress">
-      <div class="progress-track" role="progressbar" aria-valuenow="${completed.length}"
-           aria-valuemin="0" aria-valuemax="${lessons.length}"
+      <div class="progress-track" role="progressbar" aria-valuenow="${doneCount}"
+           aria-valuemin="0" aria-valuemax="${sectionLessons.length}"
            aria-label="Lessons completed">
         <div class="progress-fill" style="width:${pct}%"></div>
       </div>
-      <p class="progress-label">${completed.length} of ${lessons.length} done</p>
-      ${completed.length ? '<button type="button" id="reset">Reset</button>' : ""}
+      <p class="progress-label">${doneCount} of ${sectionLessons.length} done</p>
+      ${anyProgress ? '<button type="button" id="reset">Reset</button>' : ""}
     </div>
 
     <ul class="card-list">
-      ${lessons.map(renderCard).join("")}
+      ${sectionLessons.map(renderCard).join("")}
     </ul>
-
-    <div class="aside">
-      <strong>On order:</strong> lessons 1 and 2 work in either order. Save
-      <em>Adjectives</em> for after <em>Nouns</em> — every adjective ending depends on
-      knowing whether a noun takes <em>en</em> or <em>ett</em>.
-    </div>
-
-    <div class="next-up">
-      <h3>${afterwards.title}</h3>
-      <p>${afterwards.text}</p>
-    </div>
   `;
+
+  const dismiss = document.getElementById("dismiss-callout");
+  if (dismiss) {
+    dismiss.addEventListener("click", () => {
+      store.write(K_CALLOUT, UPDATE_ID);
+      renderOverview();
+    });
+  }
+
+  app.querySelectorAll("[data-section]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      activeSection = btn.dataset.section;
+      renderOverview();
+    });
+  });
 
   const reset = document.getElementById("reset");
   if (reset) {
     reset.addEventListener("click", () => {
-      writeCompleted([]);
+      store.write(K_PROGRESS, {});
       renderOverview();
     });
   }
 }
 
 function renderCard(lesson) {
-  const done = isDone(lesson.id);
-  const req = lesson.requires ? lessons.find((l) => l.id === lesson.requires) : null;
+  const locked = isLocked(lesson);
+  const done = lessonDone(lesson.id);
+  const count = themesDone(lesson.id).length;
+  const isNew = !locked && !isSeen(lesson.id);
 
-  return `
-    <li>
-      <a class="card ${done ? "done" : ""}" href="#/${lesson.id}">
-        <span class="card-num">${lesson.number}</span>
-        <span>
-          <span class="card-theme">${esc(lesson.theme)}</span>
-          <h2>${lesson.title}</h2>
-          <p class="card-focus">${esc(lesson.focus)}</p>
-          ${req ? `<span class="card-req">Best after lesson ${req.number}</span>` : ""}
-        </span>
-        <span class="check" aria-hidden="true">${CHECK_SVG}</span>
-        <span class="sr-only">${done ? "Completed" : "Not started"}</span>
-      </a>
-    </li>
+  const meta = `
+    <span class="card-meta">
+      <span class="card-theme">${count} of ${THEMES.length} themes</span>
+      ${isNew ? '<span class="badge-new">New</span>' : ""}
+    </span>
   `;
+
+  const checkSlot = locked
+    ? `<span class="check is-lock" aria-hidden="true">${LOCK_SVG}</span>`
+    : `<span class="check" aria-hidden="true">${CHECK_SVG}</span>`;
+
+  const body = `
+    <span class="card-num">${lesson.number}</span>
+    <span>
+      ${meta}
+      <h2>${lesson.title}</h2>
+      <p class="card-focus">${esc(lesson.focus)}</p>
+      ${
+        locked
+          ? `<span class="card-lock">${LOCK_SVG}<span>Complete ${joinNames(
+              lockNames(lesson)
+            )} to unlock</span></span>`
+          : ""
+      }
+    </span>
+    ${checkSlot}
+    <span class="sr-only">${locked ? "Locked" : done ? "Completed" : "Not started"}</span>
+  `;
+
+  if (locked) {
+    return `<li><div class="card is-locked" aria-disabled="true">${body}</div></li>`;
+  }
+  return `<li><a class="card ${done ? "done" : ""}" href="#/${lesson.id}">${body}</a></li>`;
 }
 
-/* ------------------------------------------------------------------
+/* ==================================================================
    Lesson
-   ------------------------------------------------------------------ */
+   ================================================================== */
 
 function renderLesson(lesson) {
+  markSeen(lesson.id);
+
+  const theme = selectedTheme(lesson.id);
+  const themeData = lesson.themes[theme];
   const idx = lessons.indexOf(lesson);
   const next = lessons[idx + 1];
-  const done = isDone(lesson.id);
+  const nextAvailable = next && !isLocked(next) ? next : null;
+  const done = themeDone(lesson.id, theme);
+  const blocks = lesson.build(themeData, theme);
 
   app.innerHTML = `
     <a class="back" href="#/">← All lessons</a>
 
     <header class="lesson-head">
-      <p class="eyebrow">Lesson ${lesson.number} · ${esc(lesson.theme)}</p>
+      <p class="eyebrow">Lesson ${lesson.number}</p>
       <h1>${lesson.title}</h1>
       <p>${esc(lesson.summary)}</p>
     </header>
 
-    ${lesson.blocks.map(renderBlock).join("")}
+    <div class="theme-switch" role="group" aria-label="Choose a theme">
+      <span class="theme-switch-label">Theme</span>
+      <div class="theme-pills">
+        ${THEMES.map(
+          (name) => `
+          <button type="button"
+                  class="theme-pill ${name === theme ? "is-active" : ""} ${
+            themeDone(lesson.id, name) ? "is-complete" : ""
+          }"
+                  data-theme="${esc(name)}"
+                  aria-pressed="${name === theme}">
+            <span class="theme-pill-check" aria-hidden="true">${CHECK_SVG}</span>${esc(name)}
+          </button>`
+        ).join("")}
+      </div>
+    </div>
+
+    ${blocks.map(renderBlock).join("")}
 
     <div class="lesson-foot">
       <button type="button" class="btn btn-primary ${done ? "is-done" : ""}" id="mark">
         ${done ? "Completed ✓" : "Mark as completed"}
       </button>
       ${
-        next
-          ? `<a class="next" href="#/${next.id}"><span>Next</span>${next.title} →</a>`
+        nextAvailable
+          ? `<a class="next" href="#/${nextAvailable.id}"><span>Next</span>${nextAvailable.title} →</a>`
           : `<a class="next" href="#/"><span>Done</span>Back to overview →</a>`
       }
     </div>
   `;
 
+  app.querySelectorAll("[data-theme]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      setSelectedTheme(lesson.id, btn.dataset.theme);
+      renderLesson(lesson);
+    });
+  });
+
   document.getElementById("mark").addEventListener("click", (e) => {
-    const nowDone = toggleDone(lesson.id);
+    const cur = selectedTheme(lesson.id);
+    const nowDone = toggleTheme(lesson.id, cur);
     e.target.textContent = nowDone ? "Completed ✓" : "Mark as completed";
     e.target.classList.toggle("is-done", nowDone);
+    const pill = app.querySelector('[data-theme="' + cur + '"]');
+    if (pill) pill.classList.toggle("is-complete", nowDone);
   });
 
   wireExercises();
@@ -1476,17 +2498,18 @@ function wireExercises() {
   });
 }
 
-/* ------------------------------------------------------------------
+/* ==================================================================
    Router
-   ------------------------------------------------------------------ */
+   ================================================================== */
 
 function route() {
   const id = location.hash.replace(/^#\/?/, "");
   const lesson = lessons.find((l) => l.id === id);
-  if (lesson) {
+  if (lesson && !isLocked(lesson)) {
     document.title = `${lesson.title} · Swedish grammar`;
     renderLesson(lesson);
   } else {
+    // Unknown or still-locked lesson falls back to the overview.
     document.title = "Swedish grammar for beginners";
     renderOverview();
   }
