@@ -17,8 +17,722 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/styles.css" />
     <style>
+/* ------------------------------------------------------------------
+   Tokens
+   Type system: serif carries Swedish, sans carries English.
+   ------------------------------------------------------------------ */
+
+:root {
+  --bg: #f0eee6;
+  --surface: #faf9f5;
+  --surface-2: #f4f2ea;
+  --ink: #1a1915;
+  --ink-2: #57544c;
+  --ink-3: #8c887c;
+  --line: #dfdbcf;
+  --line-strong: #cdc8b8;
+  --accent: #d97757;
+  --accent-ink: #b1543a;
+  --accent-soft: #f7e7df;
+
+  --serif: "Newsreader", Georgia, "Times New Roman", serif;
+  --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  --measure: 46rem;
+  --radius: 12px;
+  --radius-sm: 8px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #262624;
+    --surface: #2e2e2b;
+    --surface-2: #323230;
+    --ink: #f3f1e9;
+    --ink-2: #b3afa4;
+    --ink-3: #8a867b;
+    --line: #3e3e39;
+    --line-strong: #4c4c46;
+    --accent: #e08a6b;
+    --accent-ink: #eda88c;
+    --accent-soft: #3a2d27;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--accent-ink);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+.wrap {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 0 1.25rem 5rem;
+}
+
+/* ------------------------------------------------------------------
+   Masthead
+   ------------------------------------------------------------------ */
+
+.masthead {
+  padding: 4.5rem 0 2.5rem;
+}
+
+.eyebrow {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin: 0 0 1rem;
+}
+
+.masthead h1 {
+  font-family: var(--serif);
+  font-size: clamp(2.2rem, 7vw, 3.1rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.6rem;
+}
+
+.masthead h1 em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.masthead p {
+  max-width: 34rem;
+  margin: 0;
+  color: var(--ink-2);
+}
+
+/* ------------------------------------------------------------------
+   Progress
+   ------------------------------------------------------------------ */
+
+.progress {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 1.1rem 0 2rem;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 2rem;
+}
+
+.progress-track {
+  flex: 1;
+  height: 3px;
+  background: var(--line);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0;
+  background: var(--accent);
+  border-radius: 99px;
+  transition: width 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.progress-label {
+  font-size: 0.8rem;
+  color: var(--ink-2);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.progress button {
+  font: inherit;
+  font-size: 0.8rem;
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--ink-3);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.progress button:hover {
+  color: var(--accent-ink);
+}
+
+/* ------------------------------------------------------------------
+   Lesson cards
+   ------------------------------------------------------------------ */
+
+.card-list {
+  display: grid;
+  gap: 0.85rem;
+  margin: 0 0 2.5rem;
+  padding: 0;
+  list-style: none;
+}
+
+.card {
+  display: grid;
+  grid-template-columns: 2.4rem 1fr auto;
+  gap: 0 1rem;
+  align-items: start;
+  width: 100%;
+  text-align: left;
+  padding: 1.4rem 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 0.2s, transform 0.2s, background 0.2s;
+}
+
+.card:hover {
+  border-color: var(--line-strong);
+  transform: translateY(-2px);
+}
+
+.card-num {
+  font-family: var(--serif);
+  font-size: 1.6rem;
+  line-height: 1;
+  color: var(--ink-3);
+  padding-top: 0.15rem;
+}
+
+.card.done .card-num {
+  color: var(--accent);
+}
+
+.card-theme {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-ink);
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+.card h2 {
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  font-weight: 400;
+  line-height: 1.25;
+  margin: 0 0 0.4rem;
+  letter-spacing: -0.01em;
+}
+
+.card-focus {
+  font-size: 0.85rem;
+  color: var(--ink-2);
+  margin: 0;
+}
+
+.card-req {
+  display: inline-block;
+  margin-top: 0.7rem;
+  font-size: 0.75rem;
+  color: var(--ink-3);
+  border-left: 2px solid var(--line-strong);
+  padding-left: 0.55rem;
+}
+
+.check {
+  grid-column: 3;
+  grid-row: 1;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid var(--line-strong);
+  display: grid;
+  place-items: center;
+  margin-top: 0.35rem;
+  flex: none;
+}
+
+.check svg {
+  width: 12px;
+  height: 12px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.card.done .check {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.card.done .check svg {
+  opacity: 1;
+  stroke: var(--surface);
+}
+
+@media (prefers-color-scheme: dark) {
+  .card.done .check svg {
+    stroke: #262624;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Order note + footer note
+   ------------------------------------------------------------------ */
+
+.aside {
+  background: var(--accent-soft);
+  border-radius: var(--radius);
+  padding: 1.15rem 1.35rem;
+  font-size: 0.9rem;
+  color: var(--ink-2);
+  margin: 0 0 2.5rem;
+}
+
+.aside strong {
+  color: var(--ink);
+}
+
+.next-up {
+  border-top: 1px solid var(--line);
+  padding-top: 1.75rem;
+  color: var(--ink-2);
+  font-size: 0.9rem;
+}
+
+.next-up h3 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 1.05rem;
+  color: var(--ink);
+  margin: 0 0 0.4rem;
+}
+
+/* ------------------------------------------------------------------
+   Lesson view
+   ------------------------------------------------------------------ */
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 2.5rem 0 2rem;
+  font-size: 0.85rem;
+  color: var(--ink-2);
+  text-decoration: none;
+}
+
+.back:hover {
+  color: var(--accent-ink);
+}
+
+.lesson-head {
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+.lesson-head h1 {
+  font-family: var(--serif);
+  font-size: clamp(1.9rem, 5.5vw, 2.5rem);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.6rem;
+}
+
+.lesson-head p {
+  margin: 0;
+  color: var(--ink-2);
+  max-width: 34rem;
+}
+
+.block-heading {
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  margin: 3rem 0 1rem;
+}
+
+.prose {
+  margin: 0 0 1.2rem;
+  max-width: 36rem;
+}
+
+.note {
+  border-left: 2px solid var(--accent);
+  padding: 0.15rem 0 0.15rem 1.1rem;
+  margin: 1.75rem 0;
+  color: var(--ink-2);
+  max-width: 36rem;
+}
+
+.note strong {
+  color: var(--ink);
+}
+
+/* Rules list — numbering would imply sequence, so these are plain markers */
+.rules {
+  margin: 0 0 1.75rem;
+  padding: 0;
+  list-style: none;
+  max-width: 38rem;
+}
+
+.rules-title {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin: 1.75rem 0 0.7rem;
+}
+
+.rules li {
+  position: relative;
+  padding-left: 1.1rem;
+  margin-bottom: 0.55rem;
+}
+
+.rules li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+/* Tables */
+.table-wrap {
+  margin: 0 0 1.9rem;
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--serif);
+  font-size: 1rem;
+}
+
+th {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  text-align: left;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+
+td {
+  padding: 0.7rem 1rem;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+td b {
+  font-weight: 600;
+  color: var(--accent-ink);
+}
+
+.gloss {
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  color: var(--ink-3);
+  display: block;
+  line-height: 1.4;
+}
+
+.table-caption {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin: 0 0 0.7rem;
+}
+
+/* Example pairs — the signature: Swedish set large in serif, English tucked
+   underneath in small sans. */
+.examples {
+  margin: 0 0 1.9rem;
+  padding: 0;
+  list-style: none;
+}
+
+.examples li {
+  padding: 0.85rem 0 0.85rem 1.1rem;
+  border-left: 1px solid var(--line);
+}
+
+.examples li:hover {
+  border-left-color: var(--accent);
+}
+
+.sv {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  line-height: 1.45;
+  display: block;
+}
+
+.en {
+  font-size: 0.85rem;
+  color: var(--ink-3);
+  display: block;
+  margin-top: 0.15rem;
+}
+
+/* ------------------------------------------------------------------
+   Exercises
+   ------------------------------------------------------------------ */
+
+.exercise {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin: 2rem 0;
+}
+
+.exercise-label {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-ink);
+  margin: 0 0 0.5rem;
+}
+
+.exercise-instruction {
+  margin: 0 0 1.25rem;
+  font-size: 0.92rem;
+  color: var(--ink-2);
+}
+
+.q {
+  margin-bottom: 1.1rem;
+}
+
+.q-prompt {
+  font-family: var(--serif);
+  font-size: 1.02rem;
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.q-row {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.q input {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--serif);
+  font-size: 1rem;
+  padding: 0.55rem 0.75rem;
+  background: var(--bg);
+  color: var(--ink);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+}
+
+.q input::placeholder {
+  color: var(--ink-3);
+  font-family: var(--sans);
+  font-size: 0.88rem;
+}
+
+.q.right input {
+  border-color: var(--accent);
+}
+
+.q.wrong input {
+  border-color: var(--line-strong);
+}
+
+.verdict {
+  font-size: 0.95rem;
+  width: 1.1rem;
+  flex: none;
+  color: var(--accent);
+}
+
+.solution {
+  font-family: var(--serif);
+  font-size: 0.95rem;
+  color: var(--ink-2);
+  margin-top: 0.4rem;
+  padding-left: 0.1rem;
+}
+
+.solution span {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-right: 0.5rem;
+}
+
+.exercise-actions {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-top: 1.35rem;
+}
+
+/* ------------------------------------------------------------------
+   Buttons
+   ------------------------------------------------------------------ */
+
+.btn {
+  font: inherit;
+  font-size: 0.88rem;
+  padding: 0.55rem 1.1rem;
+  border-radius: 99px;
+  border: 1px solid var(--line-strong);
+  background: var(--bg);
+  color: var(--ink);
+  cursor: pointer;
+  transition: background 0.18s, border-color 0.18s, color 0.18s;
+}
+
+.btn:hover {
+  border-color: var(--ink-3);
+}
+
+.btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: var(--accent-ink);
+  border-color: var(--accent-ink);
+}
+
+.btn-primary.is-done {
+  background: transparent;
+  color: var(--accent-ink);
+}
+
+/* ------------------------------------------------------------------
+   Lesson footer
+   ------------------------------------------------------------------ */
+
+.lesson-foot {
+  margin-top: 3.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.lesson-foot .next {
+  font-size: 0.88rem;
+  text-align: right;
+}
+
+.lesson-foot .next span {
+  display: block;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.site-foot {
+  margin-top: 4rem;
+  font-size: 0.78rem;
+  color: var(--ink-3);
+}
+
+@media (max-width: 34rem) {
+  .masthead {
+    padding-top: 3rem;
+  }
+
+  .card {
+    grid-template-columns: 1.9rem 1fr auto;
+    padding: 1.2rem 1.1rem;
+  }
+
+  .exercise {
+    padding: 1.15rem;
+  }
+
+  .q-row {
+    flex-wrap: wrap;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+
+  .card:hover {
+    transform: none;
+  }
+}
+
+    </style>
+    <style>
+      .boot-error { padding: 4rem 0; }
+      .boot-error h1 { font-family: var(--serif); font-weight: 400; }
+      .boot-error pre { background: var(--surface); border: 1px solid var(--line);
+        border-radius: 8px; padding: 1rem; overflow-x: auto; font-size: .8rem; }
       .sr-only {
         position: absolute;
         width: 1px;
@@ -34,7 +748,762 @@
   </head>
   <body>
     <main class="wrap" id="app"></main>
-    <script type="module" src="js/app.js"></script>
+    <script>
+(function () {
+  "use strict";
+  try {
+// Lesson content. Each lesson is a list of blocks; app.js knows how to render
+// each block type. Add a lesson by appending an object with a unique `id`.
+
+const lessons = [
+  {
+    id: "nouns",
+    number: 1,
+    theme: "Stardew Valley",
+    title: "Nouns, gender, and “the”",
+    focus: "en/ett · definite forms · plurals",
+    summary:
+      "Every Swedish noun is an en-word or an ett-word, and “the” is glued onto the end of the word instead of standing in front of it.",
+    blocks: [
+      {
+        type: "prose",
+        text: "Swedish has two noun genders: <em>en</em>-words (about 75% of nouns) and <em>ett</em>-words (about 25%). There is no reliable rule for which is which, so you memorise the article together with the word. Learn “en gård”, never just “gård”.",
+      },
+      {
+        type: "note",
+        text: "Second big idea: <strong>“the” is a suffix, not a separate word.</strong> You attach it to the end of the noun.",
+      },
+      {
+        type: "table",
+        caption: "The four forms every noun has",
+        headers: ["", "a farm / a tree", "the …", "…s", "the …s"],
+        rows: [
+          ["en-word", "en gård", "gård<b>en</b>", "gård<b>ar</b>", "gård<b>arna</b>"],
+          ["ett-word", "ett träd", "träd<b>et</b>", "träd", "träd<b>en</b>"],
+        ],
+      },
+      { type: "heading", text: "Farm vocabulary" },
+      {
+        type: "table",
+        caption: "en-words",
+        headers: ["Indefinite", "Definite", "Plural", "Definite plural"],
+        rows: [
+          ["en gård <span class=gloss>farm</span>", "gården", "gårdar", "gårdarna"],
+          ["en hacka <span class=gloss>hoe</span>", "hackan", "hackor", "hackorna"],
+          ["en yxa <span class=gloss>axe</span>", "yxan", "yxor", "yxorna"],
+          ["en höna <span class=gloss>hen</span>", "hönan", "hönor", "hönorna"],
+          ["en ko <span class=gloss>cow</span>", "kon", "kor", "korna"],
+          ["en fisk <span class=gloss>fish</span>", "fisken", "fiskar", "fiskarna"],
+          ["en sten <span class=gloss>stone</span>", "stenen", "stenar", "stenarna"],
+          ["en gruva <span class=gloss>mine</span>", "gruvan", "gruvor", "gruvorna"],
+          ["en butik <span class=gloss>shop</span>", "butiken", "butiker", "butikerna"],
+          ["en vän <span class=gloss>friend</span>", "vännen", "vänner", "vännerna"],
+        ],
+      },
+      {
+        type: "table",
+        caption: "ett-words",
+        headers: ["Indefinite", "Definite", "Plural", "Definite plural"],
+        rows: [
+          ["ett frö <span class=gloss>seed</span>", "fröet", "frön", "fröna"],
+          ["ett äpple <span class=gloss>apple</span>", "äpplet", "äpplen", "äpplena"],
+          ["ett träd <span class=gloss>tree</span>", "trädet", "träd", "träden"],
+          ["ett svärd <span class=gloss>sword</span>", "svärdet", "svärd", "svärden"],
+          ["ett hus <span class=gloss>house</span>", "huset", "hus", "husen"],
+        ],
+      },
+      { type: "heading", text: "The patterns behind the tables" },
+      {
+        type: "rules",
+        title: "Definite (“the”)",
+        items: [
+          "en-word ending in a consonant → add <b>-en</b> · fisk → fisken",
+          "en-word ending in a vowel → add <b>-n</b> · hacka → hackan",
+          "ett-word ending in a consonant → add <b>-et</b> · svärd → svärdet",
+          "ett-word ending in a vowel → add <b>-t</b> · frö → fröet",
+        ],
+      },
+      {
+        type: "rules",
+        title: "Plural",
+        items: [
+          "en-words ending in <b>-a</b> swap it for <b>-or</b> · hacka → hackor",
+          "other en-words take <b>-ar</b> or <b>-er</b> · fisk → fiskar, butik → butiker",
+          "ett-words ending in a vowel take <b>-n</b> · äpple → äpplen",
+          "ett-words ending in a consonant don’t change · ett hus → två hus",
+        ],
+      },
+      {
+        type: "prose",
+        text: "Definite plural is then just <b>-na</b>, or <b>-a</b> if the plural already ends in <em>-r</em>: gårdar → gårdarna, äpplen → äpplena.",
+      },
+      { type: "heading", text: "Sentences" },
+      {
+        type: "examples",
+        items: [
+          ["Jag har en hacka.", "I have a hoe."],
+          ["Hackan är gammal.", "The hoe is old."],
+          ["Jag planterar frön.", "I plant seeds."],
+          ["Fröna är i lådan.", "The seeds are in the box."],
+          ["Butiken är stängd på tisdagar.", "The shop is closed on Tuesdays."],
+          ["Hönorna sover i huset.", "The hens are sleeping in the house."],
+        ],
+      },
+      {
+        type: "exercise",
+        instruction:
+          "Give the definite singular, plural, and definite plural — separated by spaces or commas.",
+        items: [
+          { q: "en fisk", answer: "fisken, fiskar, fiskarna" },
+          { q: "ett äpple", answer: "äpplet, äpplen, äpplena" },
+          { q: "en gruva", answer: "gruvan, gruvor, gruvorna" },
+          { q: "ett svärd", answer: "svärdet, svärd, svärden" },
+          { q: "en vän", answer: "vännen, vänner, vännerna" },
+        ],
+      },
+      {
+        type: "exercise",
+        instruction: "Translate into Swedish.",
+        items: [
+          { q: "The cow is big. (big = stor)", answer: "Kon är stor." },
+          { q: "I have two axes.", answer: "Jag har två yxor." },
+          {
+            q: "The trees are in the forest. (forest = skogen)",
+            answer: "Träden är i skogen.",
+          },
+        ],
+      },
+    ],
+  },
+
+  {
+    id: "verbs",
+    number: 2,
+    theme: "Pokémon",
+    title: "Verbs and word order",
+    focus: "present tense · imperatives · the V2 rule",
+    summary:
+      "Swedish verbs never change by person, which makes them easy. Word order is the part that actually needs practice.",
+    blocks: [
+      { type: "heading", text: "The good news" },
+      {
+        type: "prose",
+        text: "Swedish verbs <strong>do not change by person</strong>. One form covers everybody:",
+      },
+      {
+        type: "examples",
+        items: [
+          ["jag fångar · du fångar · han/hon fångar", "I catch · you catch · he/she catches"],
+          ["vi fångar · ni fångar · de fångar", "we catch · you catch · they catch"],
+        ],
+      },
+      {
+        type: "prose",
+        text: "Compare English “I catch / he catches”, or the six endings Spanish makes you learn. Swedish has one.",
+      },
+      { type: "heading", text: "Present tense: three groups and two irregulars" },
+      {
+        type: "table",
+        headers: ["Group", "Infinitive", "Present", "Meaning"],
+        rows: [
+          ["<b>-ar verbs</b>", "fånga", "fångar", "catch"],
+          ["", "träna", "tränar", "train"],
+          ["", "kasta", "kastar", "throw"],
+          ["", "kämpa", "kämpar", "fight"],
+          ["<b>-er verbs</b>", "springa", "springer", "run"],
+          ["", "vinna", "vinner", "win"],
+          ["", "välja", "väljer", "choose"],
+          ["", "använda", "använder", "use"],
+          ["", "sova", "sover", "sleep"],
+          ["", "flyga", "flyger", "fly"],
+          ["", "byta", "byter", "trade"],
+          ["<b>short verbs</b>", "se", "ser", "see"],
+          ["", "gå", "går", "walk, go"],
+          ["", "tro", "tror", "believe"],
+          ["<b>irregular</b>", "vara", "är", "be"],
+          ["", "ha", "har", "have"],
+        ],
+      },
+      { type: "heading", text: "The imperative" },
+      {
+        type: "prose",
+        text: "For giving orders — which is most of what you do in a battle — strip the verb back to its bare stem.",
+      },
+      {
+        type: "rules",
+        items: [
+          "<b>-ar verbs</b> drop the <em>-r</em> · Fånga den! · Kasta pokébollen! · Träna mer!",
+          "<b>-er verbs</b> drop the <em>-er</em> · Spring! · Använd Tackle! · Välj en pokémon!",
+        ],
+      },
+      { type: "heading", text: "The V2 rule" },
+      {
+        type: "prose",
+        text: "In a Swedish main clause the verb must be the <strong>second element</strong>. Not the second word — the second chunk. If something else takes the first slot, the subject gets bumped to after the verb.",
+      },
+      {
+        type: "table",
+        caption: "The verb column never moves",
+        headers: ["First element", "Verb", "Rest"],
+        rows: [
+          ["Jag", "fångar", "en Pikachu i skogen."],
+          ["Nu", "fångar", "jag en Pikachu."],
+          ["I skogen", "fångar", "jag en Pikachu."],
+          ["Varje dag", "tränar", "jag med mina pokémon."],
+          ["I gräset", "sover", "en Snorlax."],
+        ],
+      },
+      {
+        type: "note",
+        text: "English says “In the forest, <em>I catch</em> a Pikachu.” Swedish says “In the forest <em>catch I</em> a Pikachu.” Build this reflex early and you’ll sound far more natural than your vocabulary deserves.",
+      },
+      { type: "heading", text: "Questions and negation" },
+      {
+        type: "prose",
+        text: "For a yes/no question, just swap the subject and the verb. There is no “do” helper verb in Swedish.",
+      },
+      {
+        type: "examples",
+        items: [
+          ["Fångar du Pikachu?", "Are you catching Pikachu?"],
+          ["Är den stark?", "Is it strong?"],
+          ["Har du en pokéboll?", "Do you have a Poké Ball?"],
+        ],
+      },
+      {
+        type: "prose",
+        text: "Question words take the first slot, and the verb still lands second.",
+      },
+      {
+        type: "examples",
+        items: [
+          ["Var är Pikachu?", "Where is Pikachu?"],
+          ["Vad gör du?", "What are you doing?"],
+          ["Vilken pokémon väljer du?", "Which Pokémon do you choose?"],
+        ],
+      },
+      {
+        type: "prose",
+        text: "To negate, put <em>inte</em> <strong>after</strong> the verb.",
+      },
+      {
+        type: "examples",
+        items: [
+          ["Jag fångar inte Mewtwo.", "I’m not catching Mewtwo."],
+          ["Den sover inte.", "It isn’t sleeping."],
+        ],
+      },
+      {
+        type: "note",
+        text: "Swedish has no continuous tense. <em>Jag springer</em> means both “I run” and “I am running” — one form, two English translations.",
+      },
+      {
+        type: "exercise",
+        instruction: "Give the present tense and the imperative, separated by a space or comma.",
+        items: [
+          { q: "kasta", answer: "kastar, kasta" },
+          { q: "använda", answer: "använder, använd" },
+          { q: "springa", answer: "springer, spring" },
+          { q: "träna", answer: "tränar, träna" },
+        ],
+      },
+      {
+        type: "exercise",
+        instruction: "Rewrite the sentence starting with the phrase in brackets. Watch the V2 rule.",
+        items: [
+          { q: "Jag tränar varje dag. [varje dag]", answer: "Varje dag tränar jag." },
+          {
+            q: "Jag fångar en Bulbasaur i skogen. [i skogen]",
+            answer: "I skogen fångar jag en Bulbasaur.",
+          },
+        ],
+      },
+      {
+        type: "exercise",
+        instruction: "Translate into Swedish.",
+        items: [
+          { q: "Do you have a Poké Ball?", answer: "Har du en pokéboll?" },
+          { q: "I don’t use Thunderbolt.", answer: "Jag använder inte Thunderbolt." },
+          { q: "Which Pokémon do you choose?", answer: "Vilken pokémon väljer du?" },
+        ],
+      },
+    ],
+  },
+
+  {
+    id: "adjectives",
+    number: 3,
+    theme: "Bunnies",
+    title: "Adjectives and agreement",
+    focus: "three forms · double definiteness",
+    summary:
+      "Adjectives change shape depending on the noun they describe — so this one builds directly on knowing en from ett.",
+    requires: "nouns",
+    blocks: [
+      {
+        type: "note",
+        text: "Do the <em>Nouns</em> lesson first. Every ending below depends on knowing whether a noun takes <em>en</em> or <em>ett</em>.",
+      },
+      { type: "heading", text: "The one big idea" },
+      {
+        type: "prose",
+        text: "Swedish adjectives have <strong>three forms</strong>, and the noun decides which one you use.",
+      },
+      {
+        type: "table",
+        headers: ["Noun type", "Adjective form", "Example"],
+        rows: [
+          ["en-word", "base form", "en <b>söt</b> kanin <span class=gloss>a cute bunny</span>"],
+          ["ett-word", "add <b>-t</b>", "ett <b>sött</b> öra <span class=gloss>a cute ear</span>"],
+          ["plural", "add <b>-a</b>", "<b>söta</b> kaniner <span class=gloss>cute bunnies</span>"],
+          [
+            "anything definite",
+            "add <b>-a</b>",
+            "den <b>söta</b> kaninen <span class=gloss>the cute bunny</span>",
+          ],
+        ],
+      },
+      { type: "heading", text: "Vocabulary" },
+      {
+        type: "table",
+        caption: "Adjectives",
+        headers: ["en-form", "ett-form", "plural / definite", "Meaning"],
+        rows: [
+          ["söt", "sött", "söta", "cute, sweet"],
+          ["mjuk", "mjukt", "mjuka", "soft"],
+          ["snabb", "snabbt", "snabba", "fast"],
+          ["lurvig", "lurvigt", "lurviga", "fluffy, shaggy"],
+          ["vit", "vitt", "vita", "white"],
+          ["brun", "brunt", "bruna", "brown"],
+          ["hungrig", "hungrigt", "hungriga", "hungry"],
+          ["stor", "stort", "stora", "big"],
+          ["<b>liten</b>", "<b>litet</b>", "<b>små</b>", "small <span class=gloss>irregular</span>"],
+          ["glad", "glatt", "glada", "happy"],
+        ],
+      },
+      {
+        type: "table",
+        caption: "Nouns",
+        headers: ["Indefinite", "Definite", "Plural", "Definite plural"],
+        rows: [
+          ["en kanin <span class=gloss>bunny</span>", "kaninen", "kaniner", "kaninerna"],
+          ["en tass <span class=gloss>paw</span>", "tassen", "tassar", "tassarna"],
+          ["en svans <span class=gloss>tail</span>", "svansen", "svansar", "svansarna"],
+          ["en morot <span class=gloss>carrot</span>", "moroten", "<b>morötter</b>", "morötterna"],
+          ["ett öra <span class=gloss>ear</span>", "öret", "<b>öron</b>", "öronen"],
+          ["ett hål <span class=gloss>hole</span>", "hålet", "hål", "hålen"],
+        ],
+      },
+      {
+        type: "prose",
+        text: "<em>Morot</em> and <em>öra</em> have irregular plurals worth memorising as one-offs.",
+      },
+      { type: "heading", text: "Double definiteness" },
+      {
+        type: "prose",
+        text: "To say “the cute bunny”, Swedish marks definiteness <strong>twice</strong>: a free-standing article before the adjective, and the suffix on the noun.",
+      },
+      {
+        type: "table",
+        headers: ["", "Indefinite", "Definite"],
+        rows: [
+          ["en-word", "en söt kanin", "<b>den</b> söt<b>a</b> kanin<b>en</b>"],
+          ["ett-word", "ett sött öra", "<b>det</b> söt<b>a</b> öre<b>t</b>"],
+          ["plural", "söta kaniner", "<b>de</b> söt<b>a</b> kanin<b>erna</b>"],
+        ],
+      },
+      {
+        type: "prose",
+        text: "So <em>den / det / de</em> all mean “the”, chosen by gender and number. The redundancy feels wasteful on paper, but it makes spoken Swedish easy to parse.",
+      },
+      { type: "heading", text: "After “är” — no -a" },
+      {
+        type: "prose",
+        text: "When the adjective comes after the verb, it agrees with the subject but never takes <b>-a</b> in the singular.",
+      },
+      {
+        type: "examples",
+        items: [
+          ["Kaninen är söt.", "The bunny is cute."],
+          ["Öret är sött.", "The ear is cute."],
+          ["Kaninerna är söta.", "The bunnies are cute."],
+          ["Min kanin är liten.", "My bunny is small."],
+          ["Mina kaniner är små.", "My bunnies are small."],
+        ],
+      },
+      { type: "heading", text: "Sentences" },
+      {
+        type: "examples",
+        items: [
+          ["En liten vit kanin sover i hålet.", "A small white bunny is sleeping in the hole."],
+          ["Den lurviga kaninen äter en morot.", "The fluffy bunny is eating a carrot."],
+          ["Kaninens öron är långa och mjuka.", "The bunny’s ears are long and soft."],
+          ["De små kaninerna är hungriga.", "The little bunnies are hungry."],
+          ["Jag har två bruna kaniner.", "I have two brown bunnies."],
+        ],
+      },
+      {
+        type: "note",
+        text: "<em>Liten</em> has a fourth form, <strong>lilla</strong>, used in the definite singular for both genders: den <em>lilla</em> kaninen, det <em>lilla</em> öret. The definite plural goes back to <em>små</em>: de <em>små</em> kaninerna.",
+      },
+      {
+        type: "exercise",
+        instruction: "Write the full phrase with the adjective in the right form.",
+        items: [
+          { q: "ett ___ öra (mjuk)", answer: "ett mjukt öra" },
+          { q: "en ___ kanin (snabb)", answer: "en snabb kanin" },
+          { q: "tre ___ morötter (stor)", answer: "tre stora morötter" },
+          { q: "den ___ svansen (lurvig)", answer: "den lurviga svansen" },
+          { q: "det ___ hålet (liten)", answer: "det lilla hålet" },
+          { q: "Kaninen är ___ (glad)", answer: "Kaninen är glad." },
+        ],
+      },
+      {
+        type: "exercise",
+        instruction: "Translate into Swedish.",
+        items: [
+          { q: "The white bunny is fast.", answer: "Den vita kaninen är snabb." },
+          { q: "I have a small brown bunny.", answer: "Jag har en liten brun kanin." },
+          {
+            q: "The little bunnies are eating carrots. (eat = äter)",
+            answer: "De små kaninerna äter morötter.",
+          },
+        ],
+      },
+    ],
+  },
+];
+
+const afterwards = {
+  title: "After these three",
+  text: "With nouns, verbs, word order and adjectives you can build real sentences. Natural next steps: pronouns and possessives (min/mitt/mina), the past tense, and subordinate clauses — where the V2 rule breaks down and <em>inte</em> moves in front of the verb.",
+};
+
+
+const app = document.getElementById("app");
+
+/* ------------------------------------------------------------------
+   Progress storage
+   localStorage is the store; if it's unavailable (private mode, an
+   embedded preview) we fall back to memory so nothing breaks.
+   ------------------------------------------------------------------ */
+
+const KEY = "swedish-grammar:completed";
+let memory = [];
+
+function readCompleted() {
+  try {
+    const raw = localStorage.getItem(KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return memory;
+  }
+}
+
+function writeCompleted(ids) {
+  memory = ids;
+  try {
+    localStorage.setItem(KEY, JSON.stringify(ids));
+  } catch {
+    /* memory fallback already updated */
+  }
+}
+
+function isDone(id) {
+  return readCompleted().includes(id);
+}
+
+function toggleDone(id) {
+  const ids = readCompleted();
+  const next = ids.includes(id) ? ids.filter((x) => x !== id) : [...ids, id];
+  writeCompleted(next);
+  return next.includes(id);
+}
+
+/* ------------------------------------------------------------------
+   Helpers
+   ------------------------------------------------------------------ */
+
+const CHECK_SVG =
+  '<svg viewBox="0 0 16 16" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 8.5l3.5 3.5 7.5-8"/></svg>';
+
+function esc(s) {
+  return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+// Forgiving comparison: case, punctuation, spacing and accents are ignored, so
+// "kon ar stor" is accepted from a keyboard without å ä ö.
+function normalise(s) {
+  return s
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[.,!?;:]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+/* ------------------------------------------------------------------
+   Overview
+   ------------------------------------------------------------------ */
+
+function renderOverview() {
+  const completed = readCompleted();
+  const pct = Math.round((completed.length / lessons.length) * 100);
+
+  app.innerHTML = `
+    <header class="masthead">
+      <p class="eyebrow">Grammar for complete beginners</p>
+      <h1>Swedish, on <em>your</em> terms</h1>
+      <p>Three lessons covering the foundations — nouns, verbs, adjectives — each built
+      out of vocabulary you actually care about.</p>
+    </header>
+
+    <div class="progress">
+      <div class="progress-track" role="progressbar" aria-valuenow="${completed.length}"
+           aria-valuemin="0" aria-valuemax="${lessons.length}"
+           aria-label="Lessons completed">
+        <div class="progress-fill" style="width:${pct}%"></div>
+      </div>
+      <p class="progress-label">${completed.length} of ${lessons.length} done</p>
+      ${completed.length ? '<button type="button" id="reset">Reset</button>' : ""}
+    </div>
+
+    <ul class="card-list">
+      ${lessons.map(renderCard).join("")}
+    </ul>
+
+    <div class="aside">
+      <strong>On order:</strong> lessons 1 and 2 work in either order. Save
+      <em>Adjectives</em> for after <em>Nouns</em> — every adjective ending depends on
+      knowing whether a noun takes <em>en</em> or <em>ett</em>.
+    </div>
+
+    <div class="next-up">
+      <h3>${afterwards.title}</h3>
+      <p>${afterwards.text}</p>
+    </div>
+  `;
+
+  const reset = document.getElementById("reset");
+  if (reset) {
+    reset.addEventListener("click", () => {
+      writeCompleted([]);
+      renderOverview();
+    });
+  }
+}
+
+function renderCard(lesson) {
+  const done = isDone(lesson.id);
+  const req = lesson.requires ? lessons.find((l) => l.id === lesson.requires) : null;
+
+  return `
+    <li>
+      <a class="card ${done ? "done" : ""}" href="#/${lesson.id}">
+        <span class="card-num">${lesson.number}</span>
+        <span>
+          <span class="card-theme">${esc(lesson.theme)}</span>
+          <h2>${lesson.title}</h2>
+          <p class="card-focus">${esc(lesson.focus)}</p>
+          ${req ? `<span class="card-req">Best after lesson ${req.number}</span>` : ""}
+        </span>
+        <span class="check" aria-hidden="true">${CHECK_SVG}</span>
+        <span class="sr-only">${done ? "Completed" : "Not started"}</span>
+      </a>
+    </li>
+  `;
+}
+
+/* ------------------------------------------------------------------
+   Lesson
+   ------------------------------------------------------------------ */
+
+function renderLesson(lesson) {
+  const idx = lessons.indexOf(lesson);
+  const next = lessons[idx + 1];
+  const done = isDone(lesson.id);
+
+  app.innerHTML = `
+    <a class="back" href="#/">← All lessons</a>
+
+    <header class="lesson-head">
+      <p class="eyebrow">Lesson ${lesson.number} · ${esc(lesson.theme)}</p>
+      <h1>${lesson.title}</h1>
+      <p>${esc(lesson.summary)}</p>
+    </header>
+
+    ${lesson.blocks.map(renderBlock).join("")}
+
+    <div class="lesson-foot">
+      <button type="button" class="btn btn-primary ${done ? "is-done" : ""}" id="mark">
+        ${done ? "Completed ✓" : "Mark as completed"}
+      </button>
+      ${
+        next
+          ? `<a class="next" href="#/${next.id}"><span>Next</span>${next.title} →</a>`
+          : `<a class="next" href="#/"><span>Done</span>Back to overview →</a>`
+      }
+    </div>
+  `;
+
+  document.getElementById("mark").addEventListener("click", (e) => {
+    const nowDone = toggleDone(lesson.id);
+    e.target.textContent = nowDone ? "Completed ✓" : "Mark as completed";
+    e.target.classList.toggle("is-done", nowDone);
+  });
+
+  wireExercises();
+  window.scrollTo(0, 0);
+}
+
+function renderBlock(block, i) {
+  switch (block.type) {
+    case "heading":
+      return `<h2 class="block-heading">${block.text}</h2>`;
+
+    case "prose":
+      return `<p class="prose">${block.text}</p>`;
+
+    case "note":
+      return `<div class="note">${block.text}</div>`;
+
+    case "rules":
+      return `
+        ${block.title ? `<p class="rules-title">${block.title}</p>` : ""}
+        <ul class="rules">${block.items.map((x) => `<li>${x}</li>`).join("")}</ul>
+      `;
+
+    case "table":
+      return `
+        ${block.caption ? `<p class="table-caption">${block.caption}</p>` : ""}
+        <div class="table-wrap">
+          <table>
+            <thead><tr>${block.headers.map((h) => `<th>${h}</th>`).join("")}</tr></thead>
+            <tbody>
+              ${block.rows
+                .map((r) => `<tr>${r.map((c) => `<td>${c}</td>`).join("")}</tr>`)
+                .join("")}
+            </tbody>
+          </table>
+        </div>
+      `;
+
+    case "examples":
+      return `
+        <ul class="examples">
+          ${block.items
+            .map(
+              ([sv, en]) =>
+                `<li><span class="sv" lang="sv">${esc(sv)}</span><span class="en">${esc(
+                  en
+                )}</span></li>`
+            )
+            .join("")}
+        </ul>
+      `;
+
+    case "exercise":
+      return `
+        <section class="exercise" data-exercise="${i}">
+          <p class="exercise-label">Practice</p>
+          <p class="exercise-instruction">${esc(block.instruction)}</p>
+          ${block.items
+            .map(
+              (item, j) => `
+            <div class="q" data-answer="${esc(item.answer)}">
+              <label>
+                <span class="q-prompt">${esc(item.q)}</span>
+                <span class="q-row">
+                  <input type="text" autocomplete="off" autocapitalize="off"
+                         spellcheck="false" lang="sv"
+                         placeholder="Your answer" aria-label="Answer ${j + 1}">
+                  <span class="verdict" aria-live="polite"></span>
+                </span>
+              </label>
+              <p class="solution" hidden><span>Answer</span>${esc(item.answer)}</p>
+            </div>`
+            )
+            .join("")}
+          <div class="exercise-actions">
+            <button type="button" class="btn" data-action="check">Check answers</button>
+            <button type="button" class="btn" data-action="reveal">Show answers</button>
+          </div>
+        </section>
+      `;
+
+    default:
+      return "";
+  }
+}
+
+function wireExercises() {
+  app.querySelectorAll(".exercise").forEach((box) => {
+    const questions = [...box.querySelectorAll(".q")];
+
+    box.querySelector('[data-action="check"]').addEventListener("click", () => {
+      questions.forEach((q) => {
+        const input = q.querySelector("input");
+        const verdict = q.querySelector(".verdict");
+        if (!input.value.trim()) {
+          q.classList.remove("right", "wrong");
+          verdict.textContent = "";
+          return;
+        }
+        const ok = normalise(input.value) === normalise(q.dataset.answer);
+        q.classList.toggle("right", ok);
+        q.classList.toggle("wrong", !ok);
+        verdict.textContent = ok ? "✓" : "✗";
+        if (!ok) q.querySelector(".solution").hidden = false;
+      });
+    });
+
+    box.querySelector('[data-action="reveal"]').addEventListener("click", () => {
+      questions.forEach((q) => {
+        q.querySelector(".solution").hidden = false;
+      });
+    });
+
+    // Enter checks the whole set, so you can drill without reaching for the mouse.
+    box.querySelectorAll("input").forEach((input) => {
+      input.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          box.querySelector('[data-action="check"]').click();
+        }
+      });
+    });
+  });
+}
+
+/* ------------------------------------------------------------------
+   Router
+   ------------------------------------------------------------------ */
+
+function route() {
+  const id = location.hash.replace(/^#\/?/, "");
+  const lesson = lessons.find((l) => l.id === id);
+  if (lesson) {
+    document.title = `${lesson.title} · Swedish grammar`;
+    renderLesson(lesson);
+  } else {
+    document.title = "Swedish grammar for beginners";
+    renderOverview();
+  }
+}
+
+window.addEventListener("hashchange", route);
+route();
+
+  } catch (err) {
+    console.error(err);
+    document.getElementById("app").innerHTML =
+      '<div class="boot-error"><h1>Something broke while loading</h1>' +
+      '<p>Open the browser console for the details.</p><pre>' +
+      String(err) + '</pre></div>';
+  }
+})();
+    </script>
     <noscript>
       <p style="max-width: 40rem; margin: 4rem auto; padding: 0 1.25rem">
         This app needs JavaScript to show the lessons. Turn it on and reload.
